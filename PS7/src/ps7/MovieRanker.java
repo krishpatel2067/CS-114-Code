@@ -74,11 +74,12 @@ public class MovieRanker {
 
 			// fill in code to process query
 			MaxHeap<MovieRating> heap = new MaxHeap<>(rl.toArray(new MovieRating[rl.size()]), rl.size());
+			ArrayList<MovieRating> maxes = new ArrayList<>();			// to handle ties
+			ArrayList<MovieRating> leaderboard = new ArrayList<>();		// final list to display
 			
 			for (int r = 0; r < numRecords;)
 			{
 				// there can be ties in ratings
-				ArrayList<MovieRating> maxes = new ArrayList<>();
 				MovieRating currMax = heap.peek();
 				
 				while (maxes.isEmpty() || maxes.getLast().getRating() == currMax.getRating())
@@ -93,8 +94,20 @@ public class MovieRanker {
 				
 				// if we found 2 maxes with at least the required min votes, we already got 2 records
 				r += maxes.size();
+				leaderboard.addAll(maxes);
+				maxes.clear();
 			}
-
+			
+			// remove extras in case there were more tied maxes than numRecords
+			while (leaderboard.size() > numRecords)
+			{
+				System.out.println("Removing extras");
+				leaderboard.removeLast();
+			}
+			
+			for (MovieRating mr : leaderboard)
+				System.out.println(mr);
+				
 			System.out.println("Time: " + (System.currentTimeMillis() - startTime) + " ms");
 		}
 		input.close();
