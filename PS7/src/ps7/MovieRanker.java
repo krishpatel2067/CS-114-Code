@@ -32,7 +32,7 @@ public class MovieRanker {
 			e.printStackTrace();
 		}
 
-		System.out.println("Time to read data: " + (System.currentTimeMillis()-startTime) + " ms");
+		System.out.println("(Time to read data: " + (System.currentTimeMillis()-startTime) + " ms)");
 
 		int minVotes = 1;
 		int numRecords = 1;
