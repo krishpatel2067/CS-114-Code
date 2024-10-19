@@ -92,6 +92,15 @@ public class MovieRanker {
 		input.close();
 	}
 	
+	public static void filterViaVotes(ArrayList<MovieRating> al, int minVotes)
+	{
+		for (int i = al.size() - 1; i >= 0; i--)
+		{
+			if (al.get(i).getVotes() < minVotes)
+				al.remove(i);
+		}
+	}
+	
 	public static void addInAlphabeticalOrder(ArrayList<MovieRating> al, MovieRating mr)
 	{
 		if (al.isEmpty())
