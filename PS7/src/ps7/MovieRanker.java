@@ -39,21 +39,22 @@ public class MovieRanker {
 		assert minVotes==0: "pos minvotes";
 		Scanner input = new Scanner(System.in);
 		
-		if (true)
-		{
-			ArrayList<MovieRating> maxes = new ArrayList<>();
-			addInAlphabeticalOrder(maxes, rl.removeFirst());
-			System.out.println(maxes);
-			addInAlphabeticalOrder(maxes, rl.removeFirst());
-			System.out.println(maxes);
-			addInAlphabeticalOrder(maxes, rl.removeFirst());
-			System.out.println(maxes);
-			addInAlphabeticalOrder(maxes, rl.removeFirst());
-			System.out.println(maxes);
-			addInAlphabeticalOrder(maxes, rl.removeFirst());
-			System.out.println(maxes);
-			return;
-		}
+		// test addInAlphabeticalOrder()
+//		if (true)
+//		{
+//			ArrayList<MovieRating> maxes = new ArrayList<>();
+//			addInAlphabeticalOrder(maxes, rl.removeFirst());
+//			System.out.println(maxes);
+//			addInAlphabeticalOrder(maxes, rl.removeFirst());
+//			System.out.println(maxes);
+//			addInAlphabeticalOrder(maxes, rl.removeFirst());
+//			System.out.println(maxes);
+//			addInAlphabeticalOrder(maxes, rl.removeFirst());
+//			System.out.println(maxes);
+//			addInAlphabeticalOrder(maxes, rl.removeFirst());
+//			System.out.println(maxes);
+//			return;
+//		}
 		
 		while (true) {
 			System.out.println();
@@ -94,15 +95,17 @@ public class MovieRanker {
 			al.add(mr);
 			return;
 		}
-		
+				
 		for (int i = 0; i < al.size(); i++)
 		{
 			// if the title to be added is alphabetically larger
-			if (mr.getTitle().compareToIgnoreCase(al.get(i).getTitle()) < 0)
+			if (mr.getTitle().compareToIgnoreCase(al.get(i).getTitle()) <= 0)
 			{
 				al.add(i, mr);
 				return;
 			}
 		}
+		
+		al.add(mr);
 	}
 }
