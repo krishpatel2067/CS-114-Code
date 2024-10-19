@@ -46,12 +46,24 @@ public class MovieRanker {
 			if (minVotes * numRecords == 0)
 				break;
 
-
-
-
 			startTime = System.currentTimeMillis();
 
 			// fill in code to process query
+			MaxHeap<MovieRating> heap = new MaxHeap<>(rl.toArray(new MovieRating[rl.size()]), rl.size());
+			
+			for (int r = 0; r < numRecords; r++)
+			{
+				// there can be ties in ratings
+				ArrayList<MovieRating> maxes = new ArrayList<>();
+				MovieRating currMax = heap.peek();
+				
+				while (maxes.isEmpty() || maxes.getLast().getRating() == currMax.getRating())
+				{
+					currMax = heap.removeMax();
+					maxes.add(currMax);
+					currMax = heap.peek();
+				}
+			}
 
 			System.out.println("Time: " + (System.currentTimeMillis() - startTime) + " ms");
 		}
