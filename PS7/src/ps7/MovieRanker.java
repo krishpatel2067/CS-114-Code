@@ -32,39 +32,16 @@ public class MovieRanker {
 			e.printStackTrace();
 		}
 
-		//System.out.println("Reading in took: "+(System.currentTimeMillis()-startTime));
+		System.out.println("Time to read data: " + (System.currentTimeMillis()-startTime) + " ms");
 
 		int minVotes = 1;
 		int numRecords = 1;
 		assert minVotes==0: "pos minvotes";
 		Scanner input = new Scanner(System.in);
 		
-//		// test addInAlphabeticalOrder()
-//		if (true)
-//		{
-//			ArrayList<MovieRating> maxes = new ArrayList<>();
-//			addInAlphabeticalOrder(maxes, rl.removeFirst());
-//			System.out.println(maxes);
-//			addInAlphabeticalOrder(maxes, rl.removeFirst());
-//			System.out.println(maxes);
-//			addInAlphabeticalOrder(maxes, rl.removeFirst());
-//			System.out.println(maxes);
-//			addInAlphabeticalOrder(maxes, rl.removeFirst());
-//			System.out.println(maxes);
-//			addInAlphabeticalOrder(maxes, rl.removeFirst());
-//			System.out.println(maxes);
-//
-//			// test filterViaVotes()
-//			System.out.println("After filtering for min votes of 283");
-//			filterViaVotes(maxes, 283);
-//			System.out.println(maxes);
-//			
-//			return;
-//		}
-		
 		while (true) {
 			System.out.println();
-			System.out.println("Enter minimum vote threshold and number of records:");
+			System.out.print("Enter minimum vote threshold and number of records: ");
 			minVotes = input.nextInt();
 			numRecords = input.nextInt();
 			if (minVotes * numRecords == 0)
@@ -107,7 +84,7 @@ public class MovieRanker {
 			for (MovieRating mr : leaderboard)
 				System.out.println(mr);
 				
-			System.out.println("Time: " + (System.currentTimeMillis() - startTime) + " ms");
+			System.out.println("\n(Time to search: " + (System.currentTimeMillis() - startTime) + " ms)");
 		}
 		input.close();
 		System.out.println("\nEnd of program: Thank of you for using MovieRanker");
