@@ -69,7 +69,7 @@ public class MovieRanker {
 			// fill in code to process query
 			MaxHeap<MovieRating> heap = new MaxHeap<>(rl.toArray(new MovieRating[rl.size()]), rl.size());
 			
-			for (int r = 0; r < numRecords; r++)
+			for (int r = 0; r < numRecords;)
 			{
 				// there can be ties in ratings
 				ArrayList<MovieRating> maxes = new ArrayList<>();
@@ -78,9 +78,13 @@ public class MovieRanker {
 				while (maxes.isEmpty() || maxes.getLast().getRating() == currMax.getRating())
 				{
 					currMax = heap.removeMax();
-					maxes.add(currMax);
+					// automatically sort them alphabetically since ratings are the same (max)
+					addInAlphabeticalOrder(maxes, currMax);
 					currMax = heap.peek();
 				}
+				
+				// if we found 2 maxes, we already got 2 records
+				r += maxes.size();
 			}
 
 			System.out.println("Time: " + (System.currentTimeMillis() - startTime) + " ms");
