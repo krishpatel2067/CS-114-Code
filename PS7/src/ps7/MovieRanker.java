@@ -38,6 +38,23 @@ public class MovieRanker {
 		int numRecords = 1;
 		assert minVotes==0: "pos minvotes";
 		Scanner input = new Scanner(System.in);
+		
+		if (true)
+		{
+			ArrayList<MovieRating> maxes = new ArrayList<>();
+			addInAlphabeticalOrder(maxes, rl.removeFirst());
+			System.out.println(maxes);
+			addInAlphabeticalOrder(maxes, rl.removeFirst());
+			System.out.println(maxes);
+			addInAlphabeticalOrder(maxes, rl.removeFirst());
+			System.out.println(maxes);
+			addInAlphabeticalOrder(maxes, rl.removeFirst());
+			System.out.println(maxes);
+			addInAlphabeticalOrder(maxes, rl.removeFirst());
+			System.out.println(maxes);
+			return;
+		}
+		
 		while (true) {
 			System.out.println();
 			System.out.println("Enter minimum vote threshold and number of records:");
@@ -68,5 +85,24 @@ public class MovieRanker {
 			System.out.println("Time: " + (System.currentTimeMillis() - startTime) + " ms");
 		}
 		input.close();
+	}
+	
+	public static void addInAlphabeticalOrder(ArrayList<MovieRating> al, MovieRating mr)
+	{
+		if (al.isEmpty())
+		{
+			al.add(mr);
+			return;
+		}
+		
+		for (int i = 0; i < al.size(); i++)
+		{
+			// if the title to be added is alphabetically larger
+			if (mr.getTitle().compareToIgnoreCase(al.get(i).getTitle()) < 0)
+			{
+				al.add(i, mr);
+				return;
+			}
+		}
 	}
 }
