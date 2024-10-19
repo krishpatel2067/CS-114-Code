@@ -19,9 +19,9 @@ public class MovieRanker {
 			Scanner scanner = new Scanner(file);
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
-                                String[] tkns = line.split("\\t");
-                                int votes = Integer.parseInt(tkns[0]);
-                                int rtg = Integer.parseInt(tkns[1]);
+				String[] tkns = line.split("\\t");
+				int votes = Integer.parseInt(tkns[0]);
+				int rtg = Integer.parseInt(tkns[1]);
 
 				MovieRating nr = new MovieRating(tkns[2], rtg, votes);
 
@@ -36,7 +36,7 @@ public class MovieRanker {
 
 		int minVotes = 1;
 		int numRecords = 1;
-                assert minVotes==0: "pos minvotes";
+		assert minVotes==0: "pos minvotes";
 		Scanner input = new Scanner(System.in);
 		while (true) {
 			System.out.println();
@@ -51,7 +51,7 @@ public class MovieRanker {
 
 			startTime = System.currentTimeMillis();
 
-// fill in code to process query
+			// fill in code to process query
 
 			System.out.println("Time: " + (System.currentTimeMillis() - startTime) + " ms");
 		}
