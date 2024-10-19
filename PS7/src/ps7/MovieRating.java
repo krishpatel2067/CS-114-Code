@@ -1,8 +1,12 @@
+/* Starter code given by the professor. */
+package ps7;
+
+
 import java.util.LinkedList;
 import java.util.Scanner;
 
 public class MovieRating implements Comparable<MovieRating> {
-        private int votes;
+    private int votes;
 	private int rating;
 	private String title;
 	private int code;
