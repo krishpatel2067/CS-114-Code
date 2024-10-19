@@ -9,6 +9,43 @@ import java.util.Collections;
 
 public class MovieRanker {
 
+	/* TIME COMPLEXITY ANALYSIS:
+	 * Initial Data Loading:
+	 * 		* Simply uses an ArrayList linearly
+	 * 		* Suppose there are n movie ratings in the input file
+	 * 		* Total time O(n)
+	 * Create the MaxHeap:
+	 * 		* Initialized with the array-based constructor in MaxHeap
+	 * 		* Internally uses buildheap()
+	 * 		* Has a for loops with n/2 - 1 iterations (where n is the number of elements)
+	 * 		* By itself, it runs in time O(n)
+	 * 		* But each iteration calls siftdown():
+	 * 			* While loop is the only structure leading to a non-constant time complexity
+	 * 			* Worst case: minimum element at the root
+	 * 			* Would have to travel all the way down the entire height of the tree
+	 * 			* Height h = lg(n)
+	 * 		* Total time O(n * lg(n))
+	 * Processing the Query:
+	 * 		* Suppose m = # of records, k = # min votes required
+	 * 		* For loop runs m times
+	 * 		* By itself, time O(m)
+	 * 			* Suppose there are a maximum of x tied max ratings
+	 * 			* While loop runs x times
+	 * 			* By itself, time O(x)
+	 * 				* removeMax() method runs in worst case time O(lg(n)) (after it swaps the last element
+	 * 				  with the root, it might have to travel the entire height down)
+	 * 				* addInAlphabeticalOrder() runs in worst case time O(x) (might have to 
+	 * 				  add all the way to the end)
+	 * 			* filterViaVotes() takes time O(x) (has to iterate through all the maxes)
+	 * 			* ArrayList.addAll() runs in time O(x) (to add all the maxes)
+	 * 			* ArrayList.clear() runs in time O(x) (to remove each max)
+	 * 		* The while loop to remove extras takes worst case O(n), though very unlikely 
+	 * 		  that there are as many maxes as the # of ratings (safe to ignore)
+	 * 		* Subtotal time O(m * x^5 * lg(n))
+	 * 		* But as stated above x is very unlikely to remotely approach n
+	 * 		* Total time O(m * lg(n))
+	 * */
+	
 	public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();
 		File file = new File("ratings.tsv");
