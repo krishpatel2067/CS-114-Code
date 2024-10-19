@@ -39,7 +39,7 @@ public class MovieRanker {
 		assert minVotes==0: "pos minvotes";
 		Scanner input = new Scanner(System.in);
 		
-		// test addInAlphabeticalOrder()
+//		// test addInAlphabeticalOrder()
 //		if (true)
 //		{
 //			ArrayList<MovieRating> maxes = new ArrayList<>();
@@ -53,6 +53,12 @@ public class MovieRanker {
 //			System.out.println(maxes);
 //			addInAlphabeticalOrder(maxes, rl.removeFirst());
 //			System.out.println(maxes);
+//
+//			// test filterViaVotes()
+//			System.out.println("After filtering for min votes of 283");
+//			filterViaVotes(maxes, 283);
+//			System.out.println(maxes);
+//			
 //			return;
 //		}
 		
@@ -83,7 +89,9 @@ public class MovieRanker {
 					currMax = heap.peek();
 				}
 				
-				// if we found 2 maxes, we already got 2 records
+				filterViaVotes(maxes, minVotes);
+				
+				// if we found 2 maxes with at least the required min votes, we already got 2 records
 				r += maxes.size();
 			}
 
