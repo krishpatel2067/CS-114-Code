@@ -17,6 +17,11 @@ public class MaxHeap<E extends Comparable<E>> {
     /** Constructor supporting preloading of heap contents */
     public MaxHeap(E[] h, int num) {
         Heap = new ArrayList<E>(num);
+        
+        /** Added by Krish A. Patel **/
+        for (E el : h)
+        	Heap.add(el);
+        
         n = num;
         buildheap();
     }

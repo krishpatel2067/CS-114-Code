@@ -73,7 +73,8 @@ public class MovieRanker {
 			startTime = System.currentTimeMillis();
 
 			// fill in code to process query
-			MaxHeap<MovieRating> heap = new MaxHeap<>(rl.toArray(new MovieRating[rl.size()]), rl.size());
+			MovieRating[] mrArr = new MovieRating[rl.size()];
+			MaxHeap<MovieRating> heap = new MaxHeap<>(rl.toArray(mrArr), rl.size());
 			ArrayList<MovieRating> maxes = new ArrayList<>();			// to handle ties
 			ArrayList<MovieRating> leaderboard = new ArrayList<>();		// final list to display
 			
@@ -100,26 +101,23 @@ public class MovieRanker {
 			
 			// remove extras in case there were more tied maxes than numRecords
 			while (leaderboard.size() > numRecords)
-			{
-				System.out.println("Removing extras");
 				leaderboard.removeLast();
-			}
-			
+
+			System.out.println();
 			for (MovieRating mr : leaderboard)
 				System.out.println(mr);
 				
 			System.out.println("Time: " + (System.currentTimeMillis() - startTime) + " ms");
 		}
 		input.close();
+		System.out.println("\nEnd of program: Thank of you for using MovieRanker");
 	}
 	
 	public static void filterViaVotes(ArrayList<MovieRating> al, int minVotes)
 	{
 		for (int i = al.size() - 1; i >= 0; i--)
-		{
 			if (al.get(i).getVotes() < minVotes)
 				al.remove(i);
-		}
 	}
 	
 	public static void addInAlphabeticalOrder(ArrayList<MovieRating> al, MovieRating mr)
