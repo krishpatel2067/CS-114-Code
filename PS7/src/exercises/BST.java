@@ -154,47 +154,29 @@ class BST<K extends Comparable<K>, E> implements Dictionary<K, E> {
 			inorderElements(v.right(), elts); // recurse on right child
 	}
 
-	// @SuppressWarnings("unchecked")
-	public String levelOrder() {
-		ArrayList<BSTNode<K, E>[]> al = new ArrayList<>();
-		String str = "";
-
-		// manually add root node to al - [ [root] ]
-		if (root != null) {
-			BSTNode<K, E>[] lvl0 = new BSTNode[1];
-			lvl0[0] = root;
-			al.add(lvl0);
-			str += root.element() + "-";
+//	 @SuppressWarnings("unchecked")
+	protected void levelOrder(ArrayList<BSTNode<K, E>> siblings, ArrayList<E> els) 
+	{
+//		ArrayList<BSTNode<K, E>[]> al = new ArrayList<>();
+//		String str = "";
+		ArrayList<BSTNode<K, E>> childrenSiblings = new ArrayList<>();
+		
+		for (BSTNode<K, E> sibl : siblings)
+		{
+			els.add(sibl.element());
+			BSTNode<K, E> left = sibl.left();
+			BSTNode<K, E> right = sibl.right();
+						
+			if (left != null)
+				childrenSiblings.add(left);
+			if (right != null)
+				childrenSiblings.add(right);
 		}
+		
+		if (childrenSiblings.isEmpty())
+			return;
 
-		if (root.left() != null || root.right() != null) {
-			for (int lvl = 1; lvl < height; lvl++) {
-				BSTNode<K, E>[] prevLvlNodes = al.get(lvl - 1);
-				BSTNode<K, E>[] currLvlNodes = new BSTNode[(int) Math.pow(2, lvl)]; // max num of nodes in this level
-																					// 2^lvl
-				int currLvlIndex = 0; // for filling up currLvlNodes
-
-				for (BSTNode<K, E> prevLvlNode : prevLvlNodes) {
-					if (prevLvlNode == null) // in case of non-full tree some spots may be empty
-						continue;
-
-					BSTNode<K, E> left = prevLvlNode.left();
-					BSTNode<K, E> right = prevLvlNode.right();
-
-					if (left != null) {
-						currLvlNodes[currLvlIndex++] = left;
-						str += left.element() + "-";
-					}
-
-					if (right != null) {
-						currLvlNodes[currLvlIndex++] = right;
-						str += right.element() + "-";
-					}
-				}
-
-				al.add(currLvlNodes);
-			}
-		}
+		levelOrder(childrenSiblings, els);
 	}
 
 	/** Returns an iterable collection of the tree nodes. */
@@ -206,10 +188,13 @@ class BST<K extends Comparable<K>, E> implements Dictionary<K, E> {
 	}
 
 	public Iterable<E> valuesLevel() {
-		ArrayList<E> els = new ArrayList<>();
-		if (size() != 0)
-			levelOrderElements(root, els);
-		return els;
+		ArrayList<E> elements = new ArrayList<>();
+		ArrayList<BSTNode<K, E>> siblings = new ArrayList<>();
+		
+		siblings.add(root);
+		levelOrder(siblings, elementss);
+		
+		return elementss;
 	}
 
 	public Iterable<E> findAll(K k) {
