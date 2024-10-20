@@ -2,14 +2,14 @@
 package ps7;
 
 
-import java.util.LinkedList;
-import java.util.Scanner;
+//import java.util.LinkedList;
+//import java.util.Scanner;
 
 public class MovieRating implements Comparable<MovieRating> {
     private int votes;
 	private int rating;
 	private String title;
-	private int code;
+//	private int code;
 
 	MovieRating(String t, int r, int v) {
                 votes = v;

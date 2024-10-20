@@ -1,4 +1,5 @@
-/* valuesLevel() method around line 186 */
+/* valuesLevel() method around line 208 
+ * Disregard the old values level method and its protected helper method.*/
 
 package exercises;
 import java.util.ArrayList;
@@ -155,7 +156,8 @@ class BST<K extends Comparable<K>, E> implements Dictionary<K, E> {
 			inorderElements(v.right(), elts); // recurse on right child
 	}
 
-	protected void levelOrderElements(ArrayList<BSTNode<K, E>> siblings, ArrayList<E> els) 
+	// old implementation (use valuesLevel, which by default, uses a queue)
+	protected void levelOrderOld(ArrayList<BSTNode<K, E>> siblings, ArrayList<E> els) 
 	{
 		ArrayList<BSTNode<K, E>> childrenSiblings = new ArrayList<>();
 		
@@ -174,8 +176,10 @@ class BST<K extends Comparable<K>, E> implements Dictionary<K, E> {
 		if (childrenSiblings.isEmpty())
 			return;
 
-		levelOrderElements(childrenSiblings, els);
+		levelOrderOld(childrenSiblings, els);
 	}
+	
+	/*Written by Krish A. Patel (10/20/2024)*/
 
 	/** Returns an iterable collection of the tree nodes. */
 	public Iterable<E> values() {
@@ -184,19 +188,24 @@ class BST<K extends Comparable<K>, E> implements Dictionary<K, E> {
 			inorderElements(root, elements); // assign positions in preorder
 		return elements;
 	}
+	
+	/*Written by Krish A. Patel (10/20/2024)*/
 
-	public Iterable<E> valuesLevel() {
+	// (not used along with levelOrderOld) a better method is valuesLevel
+	public Iterable<E> valuesLevelOld() {
 		ArrayList<E> elements = new ArrayList<>();
 		ArrayList<BSTNode<K, E>> siblings = new ArrayList<>();
 		
 		siblings.add(root);
-		levelOrderElements(siblings, elements);
+		levelOrderOld(siblings, elements);
 		
 		return elements;
 	}
 	
+	/*Written by Krish A. Patel (10/20/2024)*/
+	
 	// perhaps queues more efficient than recursion (which is stack-like)
-	public Iterable<E> valuesLevelQueue()
+	public Iterable<E> valuesLevel()
 	{		
 		ArrayList<E> elements = new ArrayList<>();
 		Queue<BSTNode<K, E>> queue = new LinkedList<>();

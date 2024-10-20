@@ -2,10 +2,10 @@ package ps7;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.util.Stack;
+//import java.util.Stack;
 import java.util.ArrayList;
-import java.util.PriorityQueue;
-import java.util.Collections;
+//import java.util.PriorityQueue;
+//import java.util.Collections;
 
 public class MovieRanker {
 
