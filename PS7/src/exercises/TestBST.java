@@ -13,7 +13,19 @@ public class TestBST {
 	 * 		a better time, hence an "Ω" and not an "O." But to insert n elements,
 	 * 		it would take that same amount of time for each one, causing the total time to
 	 * 		be Ω(nlg(n)).
-	 * 
+	 * # 3
+	 * 		To find all the elements with a key of >= a target key k, we can use a custom
+	 * 		version of level order traversal, which can be achieved in O(n) time. The
+	 * 		traversal ends when it finds the element. Due to how MaxHeaps are structured, it
+	 * 		is guaranteed that all keys >= k are at the same level or above where the target
+	 * 		key is found. Therefore, after exiting the traversal, we just have to remove the
+	 * 		siblings of k with a key < k. The remaining elements are all with keys >= k.
+	 * 		At the worst case, we might need to filter out all of the node's siblings if they
+	 * 		all have keys < k. The number of nodes in a full level is given by 2 ^ L, where
+	 * 		L = floor(lg(n)), where n is the number of elements in the heap. So, the time to
+	 * 		filter out the siblings is approximately O(n). Therefore, the total time to get 
+	 * 		all elements with keys >= k is the time of the level order traversal plus 
+	 * 		that of filtering out invalid siblings: O(n) + O(n) = O(2n) = O(n).
 	 * */
 	
 	public static void main(String[] args) {
