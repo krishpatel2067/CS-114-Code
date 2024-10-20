@@ -155,7 +155,7 @@ class BST<K extends Comparable<K>, E> implements Dictionary<K, E> {
 	}
 
 //	 @SuppressWarnings("unchecked")
-	protected void levelOrder(ArrayList<BSTNode<K, E>> siblings, ArrayList<E> els) 
+	protected void levelOrderElements(ArrayList<BSTNode<K, E>> siblings, ArrayList<E> els) 
 	{
 //		ArrayList<BSTNode<K, E>[]> al = new ArrayList<>();
 //		String str = "";
@@ -176,7 +176,7 @@ class BST<K extends Comparable<K>, E> implements Dictionary<K, E> {
 		if (childrenSiblings.isEmpty())
 			return;
 
-		levelOrder(childrenSiblings, els);
+		levelOrderElements(childrenSiblings, els);
 	}
 
 	/** Returns an iterable collection of the tree nodes. */
@@ -192,9 +192,9 @@ class BST<K extends Comparable<K>, E> implements Dictionary<K, E> {
 		ArrayList<BSTNode<K, E>> siblings = new ArrayList<>();
 		
 		siblings.add(root);
-		levelOrder(siblings, elementss);
+		levelOrderElements(siblings, elements);
 		
-		return elementss;
+		return elements;
 	}
 
 	public Iterable<E> findAll(K k) {
