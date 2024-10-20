@@ -152,8 +152,15 @@ class BST<K extends Comparable<K>, E> implements Dictionary<K, E> {
 			inorderElements(v.right(), elts); // recurse on right child
 	}
 
-	private void levelOrderElements(BSTNode<K, E> root2, ArrayList<E> els) {
-		// TODO Auto-generated method stub
+	private void levelOrderElements(BSTNode<K, E> v, ArrayList<E> elts) 
+	{
+		if (v.left() == null && v.right() == null)
+			return;
+		
+		if (v.left() != null) elts.add(v.left().element());
+		if (v.right() != null) elts.add(v.right().element());
+		
+		
 	}
 
 	/** Returns an iterable collection of the tree nodes. */
