@@ -87,6 +87,10 @@ public class MovieRanker {
 			startTime = System.currentTimeMillis();
 
 			// fill in code to process query
+			
+			// ---------------------------------------------------------------------------------
+			/* Written by Krish A. Patel (10/19/2024) */
+			
 			MovieRating[] mrArr = new MovieRating[rl.size()];
 			MaxHeap<MovieRating> heap = new MaxHeap<>(rl.toArray(mrArr), rl.size());
 			ArrayList<MovieRating> maxes = new ArrayList<>();			// to handle ties
@@ -120,12 +124,16 @@ public class MovieRanker {
 			System.out.println();
 			for (MovieRating mr : leaderboard)
 				System.out.println(mr);
-				
+			
+			// ---------------------------------------------------------------------------------
+			
 			System.out.println("\n(Time to search: " + (System.currentTimeMillis() - startTime) + " ms)");
 		}
 		input.close();
 		System.out.println("\nEnd of program: Thank of you for using MovieRanker");
 	}
+	
+	/* Written by Krish A. Patel (10/19/2024) */
 	
 	public static void filterViaVotes(ArrayList<MovieRating> al, int minVotes)
 	{
@@ -134,6 +142,8 @@ public class MovieRanker {
 				al.remove(i);
 	}
 	
+	/* Written by Krish A. Patel (10/19/2024) */
+
 	public static void addInAlphabeticalOrder(ArrayList<MovieRating> al, MovieRating mr)
 	{
 		if (al.isEmpty())
