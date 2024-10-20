@@ -2,6 +2,8 @@
 
 package exercises;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /** BST implementation for Dictionary ADT */
 class BST<K extends Comparable<K>, E> implements Dictionary<K, E> {
@@ -189,6 +191,27 @@ class BST<K extends Comparable<K>, E> implements Dictionary<K, E> {
 		
 		siblings.add(root);
 		levelOrderElements(siblings, elements);
+		
+		return elements;
+	}
+	
+	// perhaps queues more efficient than recursion (which is stack-like)
+	public Iterable<E> valuesLevelQueue()
+	{		
+		ArrayList<E> elements = new ArrayList<>();
+		Queue<BSTNode<K, E>> queue = new LinkedList<>();
+		BSTNode<K, E> polledNode;
+		
+		queue.add(root);
+		
+		while (queue.size() != 0)
+		{
+			polledNode = queue.poll();
+			if (polledNode == null) continue;
+			elements.add(polledNode.element());
+			queue.add(polledNode.left());
+			queue.add(polledNode.right());
+		}
 		
 		return elements;
 	}
