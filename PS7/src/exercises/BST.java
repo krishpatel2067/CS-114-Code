@@ -1,8 +1,5 @@
 package exercises;
-
 import java.util.ArrayList;
-
-import lab6.BSTNode;
 
 /** BST implementation for Dictionary ADT */
 class BST<K extends Comparable<K>, E> implements Dictionary<K, E> {
@@ -154,11 +151,8 @@ class BST<K extends Comparable<K>, E> implements Dictionary<K, E> {
 			inorderElements(v.right(), elts); // recurse on right child
 	}
 
-//	 @SuppressWarnings("unchecked")
 	protected void levelOrderElements(ArrayList<BSTNode<K, E>> siblings, ArrayList<E> els) 
 	{
-//		ArrayList<BSTNode<K, E>[]> al = new ArrayList<>();
-//		String str = "";
 		ArrayList<BSTNode<K, E>> childrenSiblings = new ArrayList<>();
 		
 		for (BSTNode<K, E> sibl : siblings)
