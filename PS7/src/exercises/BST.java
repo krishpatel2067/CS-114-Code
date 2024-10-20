@@ -22,10 +22,8 @@ class BST<K extends Comparable<K>, E> implements Dictionary<K, E> {
 	/**
 	 * Insert a record into the tree.
 	 * 
-	 * @param k
-	 *          Key value of the record.
-	 * @param e
-	 *          The record to insert.
+	 * @param k Key value of the record.
+	 * @param e The record to insert.
 	 */
 	public void insert(K k, E e) {
 		root = inserthelp(root, k, e);
@@ -35,8 +33,7 @@ class BST<K extends Comparable<K>, E> implements Dictionary<K, E> {
 	/**
 	 * Remove a record from the tree.
 	 * 
-	 * @param k
-	 *          Key value of record to remove.
+	 * @param k Key value of record to remove.
 	 * @return Record removed, or null if there is none.
 	 */
 	public E remove(K k) {
@@ -65,8 +62,7 @@ class BST<K extends Comparable<K>, E> implements Dictionary<K, E> {
 
 	/**
 	 * @return Record with key k, null if none.
-	 * @param k
-	 *          The key value to find.
+	 * @param k The key value to find.
 	 */
 	public E find(K k) {
 		return findhelp(root, k);
@@ -98,117 +94,115 @@ class BST<K extends Comparable<K>, E> implements Dictionary<K, E> {
 		return rt;
 	}
 
-  private BSTNode<K, E> getmin(BSTNode<K, E> rt) {
-    if (rt.left() == null)
-      return rt;
-    else
-      return getmin(rt.left());
-  }
+	private BSTNode<K, E> getmin(BSTNode<K, E> rt) {
+		if (rt.left() == null)
+			return rt;
+		else
+			return getmin(rt.left());
+	}
 
-  private BSTNode<K, E> deletemin(BSTNode<K, E> rt) {
-    if (rt.left() == null)
-      return rt.right();
+	private BSTNode<K, E> deletemin(BSTNode<K, E> rt) {
+		if (rt.left() == null)
+			return rt.right();
 
-    else {
-      rt.setLeft(deletemin(rt.left()));
-      return rt;
-    }
-  }
+		else {
+			rt.setLeft(deletemin(rt.left()));
+			return rt;
+		}
+	}
 
-  /**
-   * Remove a node with key value k
-   * 
-   * @return The tree with the node removed
-   */
-  private BSTNode<K, E> removehelp(BSTNode<K, E> rt, K k) {
-    if (rt == null)
-      return null;
-    if (rt.key().compareTo(k) > 0)
-      rt.setLeft(removehelp(rt.left(), k));
-    else if (rt.key().compareTo(k) < 0)
-      rt.setRight(removehelp(rt.right(), k));
-    else { // Found it, remove it
-      if (rt.left() == null)
-        return rt.right();
-      else if (rt.right() == null)
-        return rt.left();
-      else { // Two children
-        BSTNode<K, E> temp = getmin(rt.right());
-        rt.setElement(temp.element());
-        rt.setKey(temp.key());
-        rt.setRight(deletemin(rt.right()));
-      }
-    }
-    return rt;
-  }
+	/**
+	 * Remove a node with key value k
+	 * 
+	 * @return The tree with the node removed
+	 */
+	private BSTNode<K, E> removehelp(BSTNode<K, E> rt, K k) {
+		if (rt == null)
+			return null;
+		if (rt.key().compareTo(k) > 0)
+			rt.setLeft(removehelp(rt.left(), k));
+		else if (rt.key().compareTo(k) < 0)
+			rt.setRight(removehelp(rt.right(), k));
+		else { // Found it, remove it
+			if (rt.left() == null)
+				return rt.right();
+			else if (rt.right() == null)
+				return rt.left();
+			else { // Two children
+				BSTNode<K, E> temp = getmin(rt.right());
+				rt.setElement(temp.element());
+				rt.setKey(temp.key());
+				rt.setRight(deletemin(rt.right()));
+			}
+		}
+		return rt;
+	}
 
-  /**
-   * Creates a list storing the the nodes in the subtree of a node, ordered
-   * according to the inorder traversal of the subtree.
-   */
+	/**
+	 * Creates a list storing the the nodes in the subtree of a node, ordered
+	 * according to the inorder traversal of the subtree.
+	 */
 
-  protected void inorderElements(BSTNode<K, E> v, ArrayList<E> elts) {
-    // elts.add(v.element());
-    if (v.left() != null)
-      inorderElements(v.left(), elts); // recurse on left child
-    elts.add(v.element());
-    if (v.right() != null)
-      inorderElements(v.right(), elts); // recurse on right child
-  }
-  private void levelOrderElements(BSTNode<K, E> root2, ArrayList<E> els) {
+	protected void inorderElements(BSTNode<K, E> v, ArrayList<E> elts) {
+		// elts.add(v.element());
+		if (v.left() != null)
+			inorderElements(v.left(), elts); // recurse on left child
+		elts.add(v.element());
+		if (v.right() != null)
+			inorderElements(v.right(), elts); // recurse on right child
+	}
+
+	private void levelOrderElements(BSTNode<K, E> root2, ArrayList<E> els) {
 		// TODO Auto-generated method stub
-}
+	}
 
-  /** Returns an iterable collection of the tree nodes. */
-  public Iterable<E> values() {
-    ArrayList<E> elements = new ArrayList<E>();
-    if (size() != 0)
-      inorderElements(root, elements); // assign positions in preorder
-    return elements;
-  }
+	/** Returns an iterable collection of the tree nodes. */
+	public Iterable<E> values() {
+		ArrayList<E> elements = new ArrayList<E>();
+		if (size() != 0)
+			inorderElements(root, elements); // assign positions in preorder
+		return elements;
+	}
 
-  public Iterable<E> valuesLevel()
-  {
-	  ArrayList<E> els = new ArrayList<>();
-	  if (size() != 0)
-		  levelOrderElements(root, els);
-	  return els;
-  }
+	public Iterable<E> valuesLevel() {
+		ArrayList<E> els = new ArrayList<>();
+		if (size() != 0)
+			levelOrderElements(root, els);
+		return els;
+	}
 
-  
+	public Iterable<E> findAll(K k) {
+		ArrayList<E> al = new ArrayList<E>();
+		findAllhelp(root, k, al);
+		return al;
+	}
 
-public Iterable<E> findAll(K k) {
-    ArrayList<E> al = new ArrayList<E>();
-    findAllhelp(root, k, al);
-    return al;
-  }
+	protected void findAllhelp(BSTNode<K, E> rt, K k, ArrayList<E> a) {
+		if (rt == null)
+			return;
+		if (rt.key().compareTo(k) > 0)
+			findAllhelp(rt.left(), k, a);
+		else if (rt.key().compareTo(k) == 0) {
+			a.add(rt.element());
+			findAllhelp(rt.right(), k, a);
+		} else
+			findAllhelp(rt.right(), k, a);
+	}
 
-  protected void findAllhelp(BSTNode<K, E> rt, K k, ArrayList<E> a) {
-    if (rt == null)
-      return;
-    if (rt.key().compareTo(k) > 0)
-      findAllhelp(rt.left(), k, a);
-    else if (rt.key().compareTo(k) == 0) {
-      a.add(rt.element());
-      findAllhelp(rt.right(), k, a);
-    } else
-      findAllhelp(rt.right(), k, a);
-  }
+	/* the following are for solving the exercises in Shaffer, ch. 5 */
 
-  /* the following are for solving the exercises in Shaffer, ch. 5 */
+	public Iterable<E> printRange(K a, K b) {
+		ArrayList<E> elements = new ArrayList<E>();
+		rangehelp(root, elements, a, b);
+		return elements;
+	}
 
-  public Iterable<E> printRange(K a, K b) {
-    ArrayList<E> elements = new ArrayList<E>();
-    rangehelp(root, elements, a, b);
-    return elements;
-  }
-
-  protected void rangehelp(BSTNode<K, E> v, ArrayList<E> elts, K a, K b) {
-    if ((v.left() != null) && (v.key().compareTo(a) > 0))
-      rangehelp(v.left(), elts, a, b); // recurse on left child
-    if ((v.key().compareTo(a) >= 0) && (v.key().compareTo(b) <= 0))
-      elts.add(v.element());
-    if ((v.right() != null) && (v.key().compareTo(b) <= 0))
-      rangehelp(v.right(), elts, a, b); // recurse on right child
-  }
+	protected void rangehelp(BSTNode<K, E> v, ArrayList<E> elts, K a, K b) {
+		if ((v.left() != null) && (v.key().compareTo(a) > 0))
+			rangehelp(v.left(), elts, a, b); // recurse on left child
+		if ((v.key().compareTo(a) >= 0) && (v.key().compareTo(b) <= 0))
+			elts.add(v.element());
+		if ((v.right() != null) && (v.key().compareTo(b) <= 0))
+			rangehelp(v.right(), elts, a, b); // recurse on right child
+	}
 }
