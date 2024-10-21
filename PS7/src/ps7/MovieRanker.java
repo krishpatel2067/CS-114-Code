@@ -90,7 +90,42 @@ public class MovieRanker {
 			
 			// ---------------------------------------------------------------------------------
 			/* Written by Krish A. Patel (10/19/2024) */
+			PriorityQueue<MovieRating> minHeap = new PriorityQueue<>();
 			
+			for (MovieRating mr : rl)
+			{
+				// only consider MovieRatings with enough votes
+				if (mr.getVotes() >= minVotes)
+				{
+					// if the minHeap isn't the desirable size yet
+					if (minHeap.size() < numRecords)
+					{
+						minHeap.add(mr);
+					}
+					// if it has numRecords elements
+					else
+					{
+						MovieRating min = minHeap.peek();
+						
+						/* keep replacing the min with MovieRatings "greater" than it 
+						 * to get a pool of maxes */
+						if (min.compareTo(mr) < 0)
+						{
+							minHeap.poll();
+							minHeap.add(mr);
+						}
+					}
+				}
+			}
+			
+			String str = "";
+			
+			while (minHeap.size() > 0)
+			{
+				str = minHeap.poll() + "\n" + str;
+			}
+			
+			System.out.println(str);
 			
 			// ---------------------------------------------------------------------------------
 			
