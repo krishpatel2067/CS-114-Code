@@ -54,7 +54,7 @@ public class MaxHeap<E extends Comparable<E>> {
         return (pos - 1) / 2;
     }
 
-    /* By Krish A. Patel */
+    
 	public ArrayList<E> GreaterOrEqual(E k) {
 		ArrayList<E> elements = new ArrayList<E>();
 		return GreaterOrEqualHelper(k, 0, elements);
@@ -62,9 +62,49 @@ public class MaxHeap<E extends Comparable<E>> {
 		// of k starting at position 0 (the root)
 	}
 
+	/* Method code by Krish A. Patel */
+	/*
+	 * TIME COMPLEXITY:
+	 * The worst time complexity is O(n) because k <= min of the heap, causing all of the 
+	 * elements to have to visited once. This is essentially pre-order traversal (equivalent 
+	 * to traversing the internal ArrayList linearly), so this would result in the worst time 
+	 * of O(n + m) = O(n) (since m <= n).
+	 * 
+	 * The best case is O(1) if k >= max since none or just one node (root) has to be visited.
+	 * */
+	
+	/*
+	 * TIME COMPLEXITY HAD IT BEEN A BST:
+	 * The worst time complexity would've been O(n) again because k could be <= min, making
+	 * us iterate all of the elements
+	 * */
 	public ArrayList<E> GreaterOrEqualHelper(E k, int pos, ArrayList<E> l) {
-		// fill in
-		return null;
+		// key does not have to exist in the heap
+		if (pos >= Heap.size())
+		{
+//			System.out.println("Exceeded bounds");
+			return l;
+		}
+			
+		E curr = Heap.get(pos);
+		
+//		System.out.println("Checking " + curr);
+		if (curr.compareTo(k) < 0)
+		{
+//			System.out.println(curr + " is less than k");
+			return l;
+		}
+			
+		// if it got here, curr >= k
+		l.add(curr);
+//		System.out.println("After adding curr " + l);
+		
+		if (!isLeaf(pos))
+		{
+			GreaterOrEqualHelper(k, leftchild(pos), l);
+			GreaterOrEqualHelper(k, rightchild(pos), l);
+		}
+		return l;
 	}
     
     /** Insert val into heap */
