@@ -54,6 +54,19 @@ public class MaxHeap<E extends Comparable<E>> {
         return (pos - 1) / 2;
     }
 
+    /* By Krish A. Patel */
+	public ArrayList<E> GreaterOrEqual(E k) {
+		ArrayList<E> elements = new ArrayList<E>();
+		return GreaterOrEqualHelper(k, 0, elements);
+		// returns array list of all elements with priority >=priority
+		// of k starting at position 0 (the root)
+	}
+
+	public ArrayList<E> GreaterOrEqualHelper(E k, int pos, ArrayList<E> l) {
+		// fill in
+		return null;
+	}
+    
     /** Insert val into heap */
     public void insert(E val) {
         //System.out.println("Inserting "+val);
