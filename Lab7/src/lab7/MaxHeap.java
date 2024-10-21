@@ -65,18 +65,30 @@ public class MaxHeap<E extends Comparable<E>> {
 	/* Method code by Krish A. Patel */
 	/*
 	 * TIME COMPLEXITY:
-	 * The worst time complexity is O(n) because k <= min of the heap, causing all of the 
+	 * The worst time complexity is O(m) because k <= min of the heap, causing all of the 
 	 * elements to have to visited once. This is essentially pre-order traversal (equivalent 
 	 * to traversing the internal ArrayList linearly), so this would result in the worst time 
-	 * of O(n + m) = O(n) (since m <= n).
+	 * of O(n + m) = O(m) (since m <= n).
 	 * 
-	 * The best case is O(1) if k >= max since none or just one node (root) has to be visited.
+	 * The best case is O(m) if k >= max since none or just one node (root) has to be visited,
+	 * but m elements have to be added to the returning ArrayList.
+	 * 
+	 * The average case is O(m) since the best and worst cases are the same.
+	 * 
+	 * This is an order-optimal algorithm because we can't do better than this since m
+	 * elements have to be inserted into the returning ArrayList.
 	 * */
 	
 	/*
 	 * TIME COMPLEXITY HAD IT BEEN A BST:
-	 * The worst time complexity would've been O(n) again because k could be <= min, making
-	 * us iterate all of the elements
+	 * The worst time complexity would've been O(m) again because k could be <= min, making
+	 * us iterate all of the elements.
+	 * 
+	 * The best case would be O(lg(n)) if k >= max. We would still need to check all the right
+	 * children until we reach the bottom of the tree (i.e. traverse the height of the tree,
+	 * which is lg(n)). 
+	 * 
+	 * The average case is O((n + lg(n)) / 2) = O(n).
 	 * */
 	public ArrayList<E> GreaterOrEqualHelper(E k, int pos, ArrayList<E> l) {
 		// key does not have to exist in the heap
