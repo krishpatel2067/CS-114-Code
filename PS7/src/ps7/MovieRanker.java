@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 //import java.util.Stack;
 import java.util.ArrayList;
-//import java.util.PriorityQueue;
+import java.util.PriorityQueue;
 //import java.util.Collections;
 
 public class MovieRanker {
@@ -91,39 +91,6 @@ public class MovieRanker {
 			// ---------------------------------------------------------------------------------
 			/* Written by Krish A. Patel (10/19/2024) */
 			
-			MovieRating[] mrArr = new MovieRating[rl.size()];
-			MaxHeap<MovieRating> heap = new MaxHeap<>(rl.toArray(mrArr), rl.size());
-			ArrayList<MovieRating> maxes = new ArrayList<>();			// to handle ties
-			ArrayList<MovieRating> leaderboard = new ArrayList<>();		// final list to display
-			
-			for (int r = 0; r < numRecords;)
-			{
-				// there can be ties in ratings
-				MovieRating currMax = heap.peek();
-				
-				while (maxes.isEmpty() || maxes.getLast().getRating() == currMax.getRating())
-				{
-					currMax = heap.removeMax();
-					// automatically sort them alphabetically since ratings are the same (max)
-					addInAlphabeticalOrder(maxes, currMax);
-					currMax = heap.peek();
-				}
-				
-				filterViaVotes(maxes, minVotes);
-				
-				// if we found 2 maxes with at least the required min votes, we already got 2 records
-				r += maxes.size();
-				leaderboard.addAll(maxes);
-				maxes.clear();
-			}
-			
-			// remove extras in case there were more tied maxes than numRecords
-			while (leaderboard.size() > numRecords)
-				leaderboard.removeLast();
-
-			System.out.println();
-			for (MovieRating mr : leaderboard)
-				System.out.println(mr);
 			
 			// ---------------------------------------------------------------------------------
 			
