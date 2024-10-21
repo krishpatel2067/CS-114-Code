@@ -14,7 +14,21 @@ public class MovieRanker {
 	 * 		* Simply uses an ArrayList linearly
 	 * 		* Suppose there are n movie ratings in the input file
 	 * 		* Total time O(n)
-	 * 
+	 * Processing the Query (along with creating the PriorityQueue):
+	 * 		* Iterating through all n MovieRatings in the ArrayList takes time O(n)
+	 * 			* Adding records into the PriorityQueue takes worst time lg(m) as each time
+	 * 			  it might have to traverse the entire height of the heap.
+	 * 			* Each time an item is polled, it takes worst time lg(m) if the item has to be 
+	 * 			  sifted down the entire height.
+	 * 		  	* Each time a new item is inserted, it may have to travel the entire height of
+	 * 		  	  the heap up, so the worst time is lg(m).
+	 * 		* Iterating over the heap to display all the items takes O(m) time.
+	 * 		* The total time is:
+	 * 				O( n(lg(m) + lg(m) + lg(m)) + O(m)
+	 * 				O( 3nlg(m) ) + O(m)
+	 * 				O(nlg(m)) + O(m)
+	 * 				O(nlg(m)) (since a linear grows slower than a linear times a logarithm,
+	 * 						   AND m is much smaller than n)
 	 * */
 	
 	public static void main(String[] args) {
