@@ -52,24 +52,33 @@ public class Compress {
 		System.out.println("Codes:");
 		System.out.println();
 
-		for (int j = 0; j < letters.size(); ++j)
-			Q.insert(new HuffmanNode(letters.get(j), frequencies.get(j), null, null));
+//		for (int j = 0; j < letters.size(); ++j)
+//			Q.insert(new HuffmanNode(letters.get(j), frequencies.get(j), null, null));
 
-		/*
-		 * The example from class:
-		 * 
-		 * Q.insert(new HuffmanNode('a', 45, null, null)); Q.insert(new HuffmanNode('b',
-		 * 20, null, null)); Q.insert(new HuffmanNode('c', 25, null, null));
-		 * Q.insert(new HuffmanNode('d', 10, null, null));
-		 */
+//		 The example from class:
+
+		Q.insert(new HuffmanNode('a', 45, null, null));
+		Q.insert(new HuffmanNode('b', 20, null, null));
+		Q.insert(new HuffmanNode('c', 25, null, null));
+		Q.insert(new HuffmanNode('d', 10, null, null));
+		
+		Q.prt();
 
 		int n = Q.heapsize();
 		for (int i = 1; i < n; ++i) {
 			HuffmanNode x = Q.removeMax();
+//			System.out.print("Removed x: ");
+//			Q.prt();
 			HuffmanNode y = Q.removeMax();
-			HuffmanNode z = new HuffmanNode('z', x.getFrequency() + y.getFrequency(), x, y);
+//			System.out.print("Removed y: ");
+//			Q.prt();
+//			System.out.println("Adding node z for " + x.getCharacter() + " and " + y.getCharacter() + " with combined frequency of " + (x.getFrequency() + y.getFrequency()));
+			HuffmanNode z1 = new HuffmanNode('z', x.getFrequency() + y.getFrequency(), x, y);
+//			System.out.println(z1);
 			// The label for the node is immaterial.
-			Q.insert(z);
+			Q.insert(z1);
+//			Q.prt();
+			System.out.println();
 		}
 		HuffmanNode r = Q.peek(); // The root of the heap.
 		System.out.println(r);
@@ -111,8 +120,14 @@ public class Compress {
 
 		while (queue.size() > 0) {
 			HuffmanNode next = queue.poll();
-			if (next == null) continue;
+			if (next == null) {
+				System.out.println("Next null");
+				continue;
+			}
 
+			elts.add(next);
+			System.out.println("Adding the left of " + r.getCharacter());
+			System.out.println("Adding the right of " + r.getCharacter());
 			queue.add(next.getLeft());
 			queue.add(next.getRight());
 		}

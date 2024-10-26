@@ -58,7 +58,8 @@ public class MaxHeap<E extends Comparable<E>> {
         //System.out.println("Inserting "+val);
         //prt();
         //System.out.println("Size= "+n);
-        Heap.add(val); // Start at end of heap
+//        Heap.add(val); // Start at end of heap
+    	Heap.add(n, val);
         int curr = n;
         n++;
         // Now sift up until curr's parent's key > curr's key
