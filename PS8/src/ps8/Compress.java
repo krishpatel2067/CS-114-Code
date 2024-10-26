@@ -52,18 +52,17 @@ public class Compress {
 		System.out.println("Codes:");
 		System.out.println();
 
-//		for (int j = 0; j < letters.size(); ++j)
-//			Q.insert(new HuffmanNode(letters.get(j), frequencies.get(j), null, null));
+		for (int j = 0; j < letters.size(); ++j)
+			Q.insert(new HuffmanNode(letters.get(j), frequencies.get(j), null, null));
 
 //		 The example from class:
 
-		Q.insert(new HuffmanNode('a', 45, null, null));
-		Q.insert(new HuffmanNode('b', 20, null, null));
-		Q.insert(new HuffmanNode('c', 25, null, null));
-		Q.insert(new HuffmanNode('d', 10, null, null));
+		/* Test code */
+//		Q.insert(new HuffmanNode('a', 45, null, null));
+//		Q.insert(new HuffmanNode('b', 20, null, null));
+//		Q.insert(new HuffmanNode('c', 25, null, null));
+//		Q.insert(new HuffmanNode('d', 10, null, null));
 		
-		Q.prt();
-
 		int n = Q.heapsize();
 		for (int i = 1; i < n; ++i) {
 			HuffmanNode x = Q.removeMax();
@@ -78,16 +77,32 @@ public class Compress {
 			// The label for the node is immaterial.
 			Q.insert(z1);
 //			Q.prt();
-			System.out.println();
 		}
 		HuffmanNode r = Q.peek(); // The root of the heap.
 		System.out.println(r);
 		printLeaves(r); // The codes are in the leaves of the tree.
 		ArrayList<HuffmanNode> elts = levelorderElements(r);
+		
+		System.out.println();
 		System.out.println("Now do levels");
+		int nBitsOrig = 0;
+		int nBitsComp = 0;
+		
 		for (HuffmanNode nd : elts)
 			if (nd.isLeaf())
+			{
+				int freq = frequencies.get(letters.indexOf(nd.getCharacter()));
 				System.out.println(nd.getCharacter() + " " + nd.getCode());
+				nBitsOrig += freq * 8;
+				nBitsComp += freq * nd.getCode().length();
+			}
+		
+		System.out.println();
+		System.out.println("Calculating the sizes: ");
+		System.out.println("Original: " + nBitsOrig/8 + " bytes");
+		System.out.println("Compressed: " + nBitsComp/8 + " bytes");
+		System.out.println("Compressed size is " + Math.round(((double)nBitsComp/nBitsOrig)*100) + "% of original.");
+		
 	}
 
 	/* Recursively descend to leaves, constructing code as we go. */
@@ -121,13 +136,10 @@ public class Compress {
 		while (queue.size() > 0) {
 			HuffmanNode next = queue.poll();
 			if (next == null) {
-				System.out.println("Next null");
 				continue;
 			}
 
 			elts.add(next);
-			System.out.println("Adding the left of " + r.getCharacter());
-			System.out.println("Adding the right of " + r.getCharacter());
 			queue.add(next.getLeft());
 			queue.add(next.getRight());
 		}
