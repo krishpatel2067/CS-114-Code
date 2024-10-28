@@ -7,18 +7,26 @@ import java.text.NumberFormat;
  */
 
 public class Experiment {
+	static int REP = 100; // how many times to repeat experiment
 
-    public static void main(String[] args) {
-        MysterySorts srts = new MysterySorts();
-        int n;
-        int REP = 100; // how many times to repeat experiment
-        long start, now, elapsed;
-        Integer[] A;
-
-        int n0 = 10000;
+	public static void main(String[] args) {
 
         int s=0; // try sort(s,.)
-        System.out.println("Testing sort "+s);
+        testSort(0);
+        testSort(1);
+        testSort(2);
+        testSort(3);
+    }
+	
+	public static void testSort(int s)
+	{
+		MysterySorts srts = new MysterySorts();
+		long start, now, elapsed;
+		int n;
+		int n0 = 10000;
+		Integer[] A;
+		
+		System.out.println("Testing sort "+s);
         n =  n0;
         A = new Integer[n];
 
@@ -77,6 +85,6 @@ public class Experiment {
         elapsed = now - start;
         System.out.println("Shuffled long array time: "+elapsed);
         System.out.println("Shuffled long array avg time: "+ (double)elapsed/REP);
-
-    }
+        System.out.println();
+	}
 }
