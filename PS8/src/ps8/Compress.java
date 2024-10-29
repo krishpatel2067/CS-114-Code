@@ -16,6 +16,33 @@ import java.io.FileInputStream;
 
 public class Compress {
 
+	/*
+	 * RESPONSE TO QUESTION # 2:
+	 * Approximately sorting can be handled using "approximate min heaps" that have a buffer of
+	 * k built into them. The heap property is modified so that each child does not HAVE to be 
+	 * greater than its parent. As long as the ith smallest element (smallest element being considered 
+	 * i = 0) is at an index j that is within a distance k from i, the new heap property is
+	 * "satisfied." Of course, some sifting up and down will be necessary to ensure that the
+	 * distance remains within k. Every time an element is added, the most that it will have
+	 * to sift up is the height of the heap (lg(n)). Similarly, the most that the root will have
+	 * to sift down is also (lg(n)). Other adjustments may need to do be done such as switching
+	 * "cousins" around based on whether they fall below the desired range or above it, which
+	 * can all be done using the equations to access a parent and child (which all take constant
+	 * time O(1)). Thus, O(lg(n) + lg(n)) = O(lg(n)) is the worst case time for inserting each
+	 * element. Inserting n elements means that the total worst case time is O(nlg(n)).
+	 * 
+	 * For extracting the approximate minimums, unlike with regular min heaps, the heap property
+	 * is much more flexible now. Instead of having to shift elements around every time a min
+	 * is extracted, we can just increment a variable like "minIndex" by one each time,
+	 * effectively eliminating access to previously extracted mins and returning the next
+	 * element in level order. Essentially, the internal ArrayList of the min heap would be
+	 * created after extracting all of the elements. This would need constant time  O(1) since
+	 * no re-modification of the heap is necessary.
+	 * 
+	 * Thus, the total time of the algorithm is just building the heap, which takes O(nlg(n)),
+	 * which is similar to a regular min heap that maintains a strict heap property.
+	 * */
+	
 	public static void main(String[] args) throws IOException {
 		MaxHeap<HuffmanNode> Q = new MaxHeap<HuffmanNode>();
 
