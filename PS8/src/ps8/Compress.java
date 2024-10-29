@@ -1,3 +1,4 @@
+/* Code provided by professor. Only some specific parts are written by Krish A. Patel. */
 package ps8;
 
 /**
@@ -9,40 +10,42 @@ package ps8;
 import java.util.Queue;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.FileInputStream;
 
 public class Compress {
 
 	/*
-	 * RESPONSE TO QUESTION # 2:
-	 * Approximately sorting can be handled using "approximate min heaps" that have a buffer of
-	 * k built into them. The heap property is modified so that each child does not HAVE to be 
-	 * greater than its parent. As long as the ith smallest element (smallest element being considered 
-	 * i = 0) is at an index j that is within a distance k from i, the new heap property is
-	 * "satisfied." Of course, some sifting up and down will be necessary to ensure that the
-	 * distance remains within k. Every time an element is added, the most that it will have
-	 * to sift up is the height of the heap (lg(n)). Similarly, the most that the root will have
-	 * to sift down is also (lg(n)). Other adjustments may need to do be done such as switching
-	 * "cousins" around based on whether they fall below the desired range or above it, which
-	 * can all be done using the equations to access a parent and child (which all take constant
-	 * time O(1)). Thus, O(lg(n) + lg(n)) = O(lg(n)) is the worst case time for inserting each
-	 * element. Inserting n elements means that the total worst case time is O(nlg(n)).
+	 * RESPONSE TO QUESTION # 2: Approximately sorting can be handled using
+	 * "approximate min heaps" that have a buffer of k built into them. The heap
+	 * property is modified so that each child does not HAVE to be greater than its
+	 * parent. As long as the ith smallest element (smallest element being
+	 * considered i = 0) is at an index j that is within a distance k from i, the
+	 * new heap property is "satisfied." Of course, some sifting up and down will be
+	 * necessary to ensure that the distance remains within k. Every time an element
+	 * is added, the most that it will have to sift up is the height of the heap
+	 * (lg(n)). Similarly, the most that the root will have to sift down is also
+	 * (lg(n)). Other adjustments may need to do be done such as switching "cousins"
+	 * around based on whether they fall below the desired range or above it, which
+	 * can all be done using the equations to access a parent and child (which all
+	 * take constant time O(1)). Thus, O(lg(n) + lg(n)) = O(lg(n)) is the worst case
+	 * time for inserting each element. Inserting n elements means that the total
+	 * worst case time is O(nlg(n)).
 	 * 
-	 * For extracting the approximate minimums, unlike with regular min heaps, the heap property
-	 * is much more flexible now. Instead of having to shift elements around every time a min
-	 * is extracted, we can just increment a variable like "minIndex" by one each time,
-	 * effectively eliminating access to previously extracted mins and returning the next
-	 * element in level order. Essentially, the internal ArrayList of the min heap would be
-	 * created after extracting all of the elements. This would need constant time  O(1) since
-	 * no re-modification of the heap is necessary.
+	 * For extracting the approximate minimums, unlike with regular min heaps, the
+	 * heap property is much more flexible now. Instead of having to shift elements
+	 * around every time a min is extracted, we can just increment a variable like
+	 * "minIndex" by one each time, effectively eliminating access to previously
+	 * extracted mins and returning the next element in level order. Essentially,
+	 * the internal ArrayList of the min heap would be created after extracting all
+	 * of the elements. This would need constant time O(1) since no re-modification
+	 * of the heap is necessary.
 	 * 
-	 * Thus, the total time of the algorithm is just building the heap, which takes O(nlg(n)),
-	 * which is similar to a regular min heap that maintains a strict heap property.
-	 * */
-	
+	 * Thus, the total time of the algorithm is just building the heap, which takes
+	 * O(nlg(n)), which is similar to a regular min heap that maintains a strict
+	 * heap property.
+	 */
+
 	public static void main(String[] args) throws IOException {
 		MaxHeap<HuffmanNode> Q = new MaxHeap<HuffmanNode>();
 
@@ -89,7 +92,7 @@ public class Compress {
 //		Q.insert(new HuffmanNode('b', 20, null, null));
 //		Q.insert(new HuffmanNode('c', 25, null, null));
 //		Q.insert(new HuffmanNode('d', 10, null, null));
-		
+
 		int n = Q.heapsize();
 		for (int i = 1; i < n; ++i) {
 			HuffmanNode x = Q.removeMax();
@@ -109,33 +112,37 @@ public class Compress {
 		System.out.println(r);
 		printLeaves(r); // The codes are in the leaves of the tree.
 		ArrayList<HuffmanNode> elts = levelorderElements(r);
-		
+
 		System.out.println();
 		System.out.println("Now do levels");
+
+		/* Written by Krish A. Patel */
 		int nBitsOrig = 0;
 		int nBitsComp = 0;
-		
+		/* ------------------------- */
+
 		for (HuffmanNode nd : elts)
-			if (nd.isLeaf())
-			{
-				int freq = frequencies.get(letters.indexOf(nd.getCharacter()));
+			if (nd.isLeaf()) {
 				System.out.println(nd.getCharacter() + " " + nd.getCode());
+				/* Written by Krish A. Patel */
+				int freq = frequencies.get(letters.indexOf(nd.getCharacter()));
 				nBitsOrig += freq * 8;
 				nBitsComp += freq * nd.getCode().length();
+				/* ------------------------- */
 			}
-		
+
+		/* Written by Krish A. Patel */
 		System.out.println();
-		System.out.println("Calculating the sizes: ");
-		System.out.println("Original: " + nBitsOrig/8 + " bytes");
-		System.out.println("Compressed: " + nBitsComp/8 + " bytes");
-		System.out.println("Compressed size is " + Math.round(((double)nBitsComp/nBitsOrig)*100) + "% of original.");
-		
+		System.out.println("Approximate sizes: ");
+		System.out.println("\tOriginal: " + nBitsOrig / 8 + " bytes");
+		System.out.println("\tCompressed: " + nBitsComp / 8 + " bytes");
+		System.out.println("Compressed size is " + Math.round(((double) nBitsComp / nBitsOrig) * 100) + "% of original.");
+
 	}
 
 	/* Recursively descend to leaves, constructing code as we go. */
 	public static void printLeaves(HuffmanNode r) {
-		if (r == null)
-			return;
+		if (r == null) return;
 		if ((r.getLeft() == null) && (r.getRight() == null)) {
 			System.out.println(r.getCode() + " " + r);
 			return;
@@ -157,14 +164,13 @@ public class Compress {
 		ArrayList<HuffmanNode> elts = new ArrayList<HuffmanNode>();
 
 		// Fill in.
+		/* Written by Krish A. Patel */
 		Queue<HuffmanNode> queue = new LinkedList<>();
 		queue.add(r);
 
 		while (queue.size() > 0) {
 			HuffmanNode next = queue.poll();
-			if (next == null) {
-				continue;
-			}
+			if (next == null) continue;
 
 			elts.add(next);
 			queue.add(next.getLeft());
