@@ -6,14 +6,20 @@ public class ModifiedMergeSort {
 
 	}
 
-	public static <T extends Comparable<T>> void mergeSort(T[] A, T[] temp, int l, int r)
+	public static <T extends Comparable<T>> void mergeSort(T[] A, T[] temp, int l, int r, int k)
 	{		
 		if (l >= r)
 			return;
 		
-		int mid = (l + r) / 2;
-		mergeSort(A, temp, l, mid);
-		mergeSort(A, temp, mid + 1, r);
+		int newL = l;
+		
+		// if k = 3, L = 8, then i runs from 1 to 3
+		for (int i = 1; i <= A.length / k + 1; i++)
+		{
+			int currMid = Math.min(i * (A.length / k), r);
+			mergeSort(A, temp, newL, currMid, k);
+			newL = currMid + 1;
+		}
 		
 		for (int i = l; i <= r; i++)
 			temp[i] = A[i];
