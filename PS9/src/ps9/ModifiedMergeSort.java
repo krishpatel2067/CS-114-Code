@@ -3,11 +3,11 @@ package ps9;
 public class ModifiedMergeSort {
 
 	public static void main(String[] args) {
-		Integer[] arr = {7, 3, 5, 8, 2, 9, 1, 0};
+		Integer[] arr = {17, 19, 7, 4, 5};
 		Integer[] temp = arr.clone();
 
 		System.out.println(prt(arr, 0, arr.length - 1));
-		mergeSort(arr, temp, 0, arr.length - 1, 3, "");
+		mergeSort(arr, temp, 0, arr.length - 1, 6, "");
 		
 		for (Integer i : arr)
 		{
