@@ -1,3 +1,5 @@
+/* Code given by professor */
+
 package lab9;
 import java.io.BufferedWriter;
 import java.io.File;

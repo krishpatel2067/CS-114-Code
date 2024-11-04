@@ -1,3 +1,5 @@
+/* Copy of Blur.java with modifications */
+
 package lab9;
 
 import java.io.BufferedWriter;
@@ -56,6 +58,7 @@ public class Clean {
 				for (int c = 0; c < 3; ++c) {
 
 					// Instead of average, think of what else you might compute.
+					/* Modified by Krish A. Patel */
 					// try median, q3, max (median worst, q3 works best, max removes desired pixels)
 					int[] pixelData = new int[scan.length];
 					
@@ -66,10 +69,12 @@ public class Clean {
 //						System.out.println(next);
 						pixelData[k] = next;
 					}
-					int median = Select.select(pixelData, 0, pixelData.length - 1, 2 * (pixelData.length / 4));
+					int q3 = Select.select(pixelData, 0, pixelData.length - 1, 3 * (pixelData.length / 4));
+//					int median = Select.select(pixelData, 0, pixelData.length - 1, 2 * (pixelData.length / 4));
+//					int max = Select.select(pixelData, 0, pixelData.length - 1, pixelData.length);
 //					prt(scanData, 0, -1);
 //					avg = avg / pics;
-					output.write(String.format("%d ", median));
+					output.write(String.format("%d ", q3));
 
 				}
 			}
