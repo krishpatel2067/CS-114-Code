@@ -4,10 +4,10 @@ import java.util.Random;
 
 public class Select {
 
-  static Random rm;
+  static Random rm = new Random();
 
   public static void main(String[] args) {
-    rm = new Random();
+//    rm = new Random();
     int[] A = { 7, 2, 6, 6, 4, 3, 5, 0, 11, 6 };
 
     for (int j = 0; j < A.length; ++j)

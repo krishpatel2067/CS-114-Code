@@ -29,7 +29,7 @@ public class Clean {
 		//
 		Scanner[] scan = new Scanner[pics];
 
-		int rows = 0, cols = 0, mx = 0;
+		int rows = 0, cols = 0, mx = 0;			// all images the same size
 		for (int i = 0; i < pics; ++i) {
 			try {
 				scan[i] = new Scanner(file[i]);
@@ -44,7 +44,7 @@ public class Clean {
 
 		// open output file and print out header
 
-		BufferedWriter output = new BufferedWriter(new FileWriter("blurred.ppm"));
+		BufferedWriter output = new BufferedWriter(new FileWriter("blurred2.ppm"));
 		output.write(String.format("%s\n", "P3"));
 		output.write(String.format("%d  %d\n", cols, rows));
 		output.write(String.format("%d\n", mx));
@@ -56,15 +56,20 @@ public class Clean {
 				for (int c = 0; c < 3; ++c) {
 
 					// Instead of average, think of what else you might compute.
-					// maybe median??
-//					int median = Select.select(null, i, j, c)
+					// try median, q3, max (median worst, q3 works best, max removes desired pixels)
+					int[] pixelData = new int[scan.length];
 					
-					int avg = 0;
+//					int avg = 0;
 					for (int k = 0; k < pics; ++k) {
-						avg += Integer.parseInt(scan[k].next());
+						int next = Integer.parseInt(scan[k].next());
+//						avg += next;
+//						System.out.println(next);
+						pixelData[k] = next;
 					}
-					avg = avg / pics;
-					output.write(String.format("%d ", avg));
+					int median = Select.select(pixelData, 0, pixelData.length - 1, 2 * (pixelData.length / 4));
+//					prt(scanData, 0, -1);
+//					avg = avg / pics;
+					output.write(String.format("%d ", median));
 
 				}
 			}
@@ -75,5 +80,15 @@ public class Clean {
 			scan[i].close();
 		}
 		output.close();
+		System.out.println("Finished");
+	}
+	
+	public static void prt(int[] arr, int i, int j)
+	{
+		if (j == -1)
+			j = arr.length - 1;
+		
+		for (int k = i; k <= j; k++)
+			System.out.print(k + " ");
 	}
 }
