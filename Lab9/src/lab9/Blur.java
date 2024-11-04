@@ -14,7 +14,7 @@ public class Blur {
     int pics = 17;
     File[] file = new File[pics];
     //String prefix = "../resource/asnlib/publicdata/";
-    String prefix = "";
+    String prefix = "Birds/BIRDS/";
     for (int p = 1; p <= pics; ++p) {
       String suff = String.valueOf(p);
       String filename = prefix + "birds" + suff + ".ppm";

@@ -15,7 +15,7 @@ public class Clean {
 		int pics = 17;
 		File[] file = new File[pics];
 		// String prefix = "../resource/asnlib/publicdata/";
-		String prefix = "";
+		String prefix = "Birds/BIRDS/";
 		for (int p = 1; p <= pics; ++p) {
 			String suff = String.valueOf(p);
 			String filename = prefix + "birds" + suff + ".ppm";
@@ -56,7 +56,9 @@ public class Clean {
 				for (int c = 0; c < 3; ++c) {
 
 					// Instead of average, think of what else you might compute.
-
+					// maybe median??
+//					int median = Select.select(null, i, j, c)
+					
 					int avg = 0;
 					for (int k = 0; k < pics; ++k) {
 						avg += Integer.parseInt(scan[k].next());
