@@ -2,12 +2,29 @@ package ps9;
 
 public class ModifiedMergeSort {
 
+	/* (1) TIME COMPLEXITY ANALYSIS
+	 * Merge-sorting with k sub-arrays is much less efficient than traditional merge sort.
+	 * 
+	 * First, instead of calling merge sort twice recursively, now it is k times. Each sub-array
+	 * is approximately n/k elements. The total number of times recursion has to be called is
+	 * the number of nodes in a k-way tree, described by (k^L - 1)/(k-1), where L is the number
+	 * of levels in the tree, given by ceil(log_k(n)). Thus, recursion has to be called
+	 * (k^log_k(n) - 1)/(k-1) = (n-1)/(k-1). 
+	 * 
+	 * The most number of times recursion has to be called is
+	 * L = ceil(log_k(n)) = ceil(lg(n)/lg(k)) times (this can be seen by drawing out a tree-like
+	 * diagram with the array and sub-array lengths at each "node"). 
+	 * 
+	 * At each level of that tree,
+	 * the sub-array length (left - right + 1) is n/k^L. 
+	 * */
+	
 	public static void main(String[] args) {
 		Integer[] arr = {17, 19, 7, 4, 5};
 		Integer[] temp = arr.clone();
 
 		System.out.println(prt(arr, 0, arr.length - 1));
-		mergeSort(arr, temp, 0, arr.length - 1, 6, "");
+		mergeSort(arr, temp, 0, arr.length - 1, 3, "");
 		
 		for (Integer i : arr)
 		{
