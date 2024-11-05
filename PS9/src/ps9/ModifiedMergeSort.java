@@ -1,3 +1,17 @@
+/*
+ * Krish A. Patel
+ * Updated 11/5/2024
+ * Due 11/6/2024
+ * */
+
+/*
+ * There are many print statements that are commented out. They are usual for debugging
+ * purposes and to follow the algorithm step-by-step. The parameter `tab` helps indent
+ * the console once every recursive level for better readability.
+ * 
+ * The algorithm looks a bit complex but the print statements and different test inputs 
+ * help a LOT (I know they did when I wrote it in 3-4 hours!).
+ * */
 package ps9;
 
 public class ModifiedMergeSort {
@@ -74,7 +88,7 @@ public class ModifiedMergeSort {
 		Integer[] arr = {17, 19, 7, 4, 5};
 		Integer[] temp = arr.clone();
 
-		System.out.println(prt(arr, 0, arr.length - 1));
+//		System.out.println(prt(arr, 0, arr.length - 1));
 		mergeSort(arr, temp, 0, arr.length - 1, 3, "");
 		
 		for (Integer i : arr)
@@ -88,24 +102,28 @@ public class ModifiedMergeSort {
 		if (l >= r)
 			return;
 		
-		int L = r - l + 1;
-		int remainder = L % k;
-		int greatestMul = L - remainder;
-		int nEl = L / k;
-		int newl = l;
-		int mid;
+		int L = r - l + 1;		// current sub-array length
+		int remainder = L % k;	// remainder - useful for splitting into evenly-sized sub-arrays
+		int nEl = L / k;		// next sub-array number of elements
+		int newl = l;			// "new l"
+		int mid;				// midpoint
 		
+		// indices that start at the start of each sub-array during merging
 		Integer[] indices;
 		
 		// use regular merge sort
 		if (L < k)
 		{
 			indices = new Integer[2];
+			
+			// these are set just like regular merge sort
 			mid = (l + r) / 2;
 			indices[0] = l;
 			indices[1] = mid + 1;
-			System.out.println(tab + "_m(A, t, " + l + ", " + mid + ", k=" + k + ") " + prt(A, l, mid));
-			System.out.println(tab + "_m(A, t, " + (mid + 1) + ", " + r + ", k=" + k + ") " + prt(A, mid + 1, r));
+			
+			// _m to differentiate between regular & modified merge sort
+//			System.out.println(tab + "_m(A, t, " + l + ", " + mid + ", k=" + k + ") " + prt(A, l, mid));
+//			System.out.println(tab + "_m(A, t, " + (mid + 1) + ", " + r + ", k=" + k + ") " + prt(A, mid + 1, r));
 			mergeSort(A, temp, l, mid, k, tab + "\t");
 			mergeSort(A, temp, mid + 1, r, k, tab + "\t");
 		}
@@ -115,14 +133,16 @@ public class ModifiedMergeSort {
 			indices = new Integer[k];
 			for (int i = 0; i < k; i++)
 			{
-				// the last ones house L / k + 1 more element
+				// the last few sub-arrays one house L / k + 1 elements
+				// e.g. [L=14,k=5] --> [2, 3, 3, 3, 3]
 				if (i >= k - remainder)
 					mid = newl + nEl;
 				// the first ones house L / k elements
 				else
 					mid = newl + nEl - 1;
 				
-				System.out.println(tab + "m(A, t, " + newl + ", " + mid + ", k=" + k + ") " + prt(A, newl, mid));
+//				System.out.println(tab + "m(A, t, " + newl + ", " + mid + ", k=" + k + ") " + prt(A, newl, mid));
+				// repeated recursion k times
 				mergeSort(A, temp, newl, mid, k, tab + "\t");
 				indices[i] = newl;
 				newl = mid + 1;
@@ -132,20 +152,17 @@ public class ModifiedMergeSort {
 		for (int i = l; i <= r; i++)
 			temp[i] = A[i];
 		
-		// replaced by indices arr
-//		int i1 = l;
-//		int i2 = mid + 1;
-		
+		// to store an un-changing backup
 		Integer[] indicesCopy = indices.clone();
 		
-		System.out.println(tab + "indicesCopy: " + prt(indicesCopy, 0, -1));
+//		System.out.println(tab + "indicesCopy: " + prt(indicesCopy, 0, -1));
 		
 		for (int curr = l; curr <= r; curr++)
 		{
-			System.out.println("\n" + tab + "curr = " + curr);
+//			System.out.println("\n" + tab + "curr = " + curr);
 			// find the minimum from the k arrays
-			int minI = 0;
-			int minIndex = indices[0];
+			int minI = 0;						// index in indices[] of index of minimum in temp[]
+			int minIndex = indices[0];			// index of minimum in temp[]
 			
 			// maybe the first one is exhausted (-1), so keep going until you find non-exhausted
 			while (minIndex == -1)
@@ -158,17 +175,19 @@ public class ModifiedMergeSort {
 			
 			for (int i = 0; i < indices.length; i++)
 			{	
-				// check if exhausted
+				// if there's at least one index after
 				if (i < indices.length - 1)
 				{
+					// check if exhausted (indices trespassing into next sub-array)
 					if (indices[i] >= indicesCopy[i + 1])
 					{
-						indices[i] = -1;
+						indices[i] = -1;			// represent as -1 index
 						
-						if (i == minI)
+						if (i == minI)				// update minIndex too
 							minIndex = -1;
 					}
 				}
+				// same thing, but for last element
 				else
 				{
 					if (indices[i] > r)
@@ -179,13 +198,15 @@ public class ModifiedMergeSort {
 					}
 				}
 				
-				if (indices[i] == -1)
-				{
+//				if (indices[i] == -1)
+//				{
 //					System.out.println(tab + "-1 index: " + i);
-				}
+//				}
 				
 				// min checking
 //				System.out.println(tab + "checking: " + temp[indices[i]] + " & " + min);
+				// either curr index not exhausted & new min found
+				// OR minIndex is -1 (from a now-exhausted index)
 				if ((indices[i] != -1 && temp[indices[i]].compareTo(min) < 0) || (indices[i] != -1 && minIndex == -1))
 				{
 					System.out.println(tab + "changing");
@@ -195,35 +216,27 @@ public class ModifiedMergeSort {
 				}
 			}
 			
-			System.out.println(tab + "indices now " + prt(indices, 0, -1));
+//			System.out.println(tab + "indices now " + prt(indices, 0, -1));
 //			System.out.println(tab + "len " + indices.length);
 //			System.out.println(tab + "minI " + minI);
-			System.out.println(tab + "minIndex " + indices[minI]);
+//			System.out.println(tab + "minIndex " + indices[minI]);
+			
+			// increment each index used (just like regular merge sort)
 			A[curr] = temp[indices[minI]++];
-			System.out.println(tab + "A now: " + prt(A, 0, -1));
-		
-//			if (i1 > mid)
-//				A[curr] = temp[i2++];
-//			else if (i2 > r)
-//				A[curr] = temp[i1++];
-//			else if (temp[i1].compareTo(temp[i2]) < 0)
-//				A[curr] = temp[i1++];
-//			else
-//				A[curr] = temp[i2++];
+//			
+//			System.out.println(tab + "A now: " + prt(A, 0, -1));
 		}
 			
 	}
 	
+	// to print arrays conveniently (mainly for debugging & following the algorithm - no sorting functionality affected from this
 	public static <T extends Comparable<T>> String prt(T[] arr, int l, int r)
-	{
-		if (r == -1)
-			r = arr.length - 1;
+	{	
+		r = r == -1 ? arr.length - 1 : r;
 		String str = "[";
 		
 		for (int i = l; i <= r; i++)
-		{
 			str += arr[i] + ", ";
-		}
 		
 		return str + "]";
 	}
