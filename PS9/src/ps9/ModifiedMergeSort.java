@@ -54,7 +54,20 @@ public class ModifiedMergeSort {
 	 * check just one blue jug for every red jug). This means that the average number of
 	 * comparisons is O(nlg(n)).
 	 * 
-	 *
+	 * OPTIONAL EXERCISE:
+	 * The i'th smallest element can be extracted from an array using quick selection, which
+	 * has an average time of O(n). The selection algorithm can be modified to return the index
+	 * j of the selected element as well. Then, the element at index j and the element at index
+	 * i can be swapped, so that the i'th smallest element ends up correctly in index i. This
+	 * would not place the other swapped element outside of the range k because if the smallest
+	 * element (i = 0) was within range, then placing any other element at that location j
+	 * will at most keep the range the same. 
+	 * 
+	 * As an example, extract the smallest element using quick selection, store index i = 0 and j.
+	 * Swap elements at i and j. Repeat with the 2nd smallest element (i = 1, j = any valid index
+	 * not 1). Do this for all the elements. Because swapping is a constant-time operation, the
+	 * only thing adding to the time complexity is the quick selection of all elements, which
+	 * is on average O(n).
 	 * */
 	
 	public static void main(String[] args) {
