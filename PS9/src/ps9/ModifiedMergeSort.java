@@ -32,13 +32,29 @@ public class ModifiedMergeSort {
 	 * (2) RED JUGS & BLUE JUGS
 	 * 
 	 * (A) An algorithm that runs in theta(n^2) is the following:
-	 * Start with one red jug, compare it with one blue jug. If the red jug pours exactly
-	 * enough water to fill the blue jug without overflowing, then group them together (set
-	 * them aside). If not, move to the next blue jug, and repeat the process until you find 
-	 * a matching capacity blue jug. Checking at most n blue jugs for every red jug
-	 * takes theta(n) time. So, checking at most n blue jugs for n red jugs takes theta(n^2) time.
+	 * Start with one red jug, compare it with the FIRST blue jug. If the red jug pours exactly
+	 * enough water to fill the blue jug without overflowing, then set aside the blue jug.
+	 * If not, move to the next blue jug, and repeat the process for all the blue jugs. 
+	 * By the end, there must be one blue jug set aside (precondition of the problem is that
+	 * there is exactly 1 blue jug of equal capacity of every red jug). Checking n blue jugs for 
+	 * every red jug (not stopping the process even when the match has been found early) takes theta(n) time. 
+	 * So, checking n blue jugs for all n red jugs takes theta(n^2) time.
 	 * 
-	 * (b)
+	 * (B) It was proven on the lecture slides that the minimum number of pair-wise comparisons
+	 * over an array of length n is omega(nlg(n)). In this case, because we are making pair-wise 
+	 * comparisons between a red jug and a blue jug (to see whether they are of equal capacity),
+	 * the lower bound for this algorithm is omega(nlg(n)). 
+	 * 
+	 * (C) A randomized algorithm (as opposed to the deterministic one in 2A) is the following:
+	 * Start with one red jug, compare it with any random blue jug. If there is a match, the 
+	 * algorithm is finished. If not, set aside the unmatched blue jug. Repeat this process on
+	 * the remaining blue jugs for this same red jug until a match has been found. When the time
+	 * the last blue jug is checked, there will have to have been a match. This algorithm
+	 * does not always check all the blue jugs (only does so in the worst case, and may in fact
+	 * check just one blue jug for every red jug). This means that the average number of
+	 * comparisons is O(nlg(n)).
+	 * 
+	 *
 	 * */
 	
 	public static void main(String[] args) {
