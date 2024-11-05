@@ -11,12 +11,22 @@ public class ModifiedMergeSort {
 	 * of levels in the tree, given by ceil(log_k(n)). Thus, recursion has to be called
 	 * (k^log_k(n) - 1)/(k-1) = (n-1)/(k-1). 
 	 * 
-	 * The most number of times recursion has to be called is
-	 * L = ceil(log_k(n)) = ceil(lg(n)/lg(k)) times (this can be seen by drawing out a tree-like
-	 * diagram with the array and sub-array lengths at each "node"). 
+	 * The for loop that copies elements from A to temp runs n/k times.
 	 * 
-	 * At each level of that tree,
-	 * the sub-array length (left - right + 1) is n/k^L. 
+	 * The for loop that runs from the left index to the right index runs n/k times. Inside the 
+	 * for loop, the while loop that has to decide the index of the minimum element may run 
+	 * at most k times. The inner for loop runs at most k times (for k indices during the merging
+	 * process). The total time for the outer for loop is O((n/k)(k) + k) = O(n + k).
+	 * 
+	 * The total time by all recursions is O((n-1)/(k-1) * [(n/k) + (n+k)]). This simplifies
+	 * to O(n^2/k^2 + n^2/k + n). The term n^2/k^2 is of lower order than n^2/k, so it can be
+	 * disregarded. Thus, the simplified version is O(n^2/k + n).
+	 * 
+	 * If k << n, then the time complexity is roughly O(n^2). Clearly, this is worse than
+	 * the traditional merge sort time of O(nlg(n)). However, this is assuming that k is variable,
+	 * which requires a loop for finding the minimum instead of a single comparison. If k were 
+	 * fixed like k = 3, then there may be slight (but not worthwhile) efficiency gains over 
+	 * k = 2 (traditional) merge sort. Nonetheless, k-way merge sort is inefficient.
 	 * */
 	
 	public static void main(String[] args) {
