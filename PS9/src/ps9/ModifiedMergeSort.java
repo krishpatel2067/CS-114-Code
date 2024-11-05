@@ -28,6 +28,17 @@ public class ModifiedMergeSort {
 	 * which requires a loop for finding the minimum instead of a single comparison. If k were 
 	 * fixed like k = 3, then there may be slight (but not worthwhile) efficiency gains over 
 	 * k = 2 (traditional) merge sort. Nonetheless, k-way merge sort is inefficient.
+	 * 
+	 * (2) RED JUGS & BLUE JUGS
+	 * 
+	 * (A) An algorithm that runs in theta(n^2) is the following:
+	 * Start with one red jug, compare it with one blue jug. If the red jug pours exactly
+	 * enough water to fill the blue jug without overflowing, then group them together (set
+	 * them aside). If not, move to the next blue jug, and repeat the process until you find 
+	 * a matching capacity blue jug. Checking at most n blue jugs for every red jug
+	 * takes theta(n) time. So, checking at most n blue jugs for n red jugs takes theta(n^2) time.
+	 * 
+	 * (b)
 	 * */
 	
 	public static void main(String[] args) {
