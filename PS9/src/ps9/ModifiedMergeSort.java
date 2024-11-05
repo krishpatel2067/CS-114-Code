@@ -17,8 +17,9 @@ public class ModifiedMergeSort {
 	 * for loop, the while loop that has to decide the index of the minimum element may run 
 	 * at most k times. The inner for loop runs at most k times (for k indices during the merging
 	 * process). The total time for the outer for loop is O((n/k)(k) + k) = O(n + k).
-	 * 
-	 * The total time by all recursions is O((n-1)/(k-1) * [(n/k) + (n+k)]). This simplifies
+	 *
+	 * Each recursion takes O(k + (n/k) + (n+k)) = O((n/k) + n + 2k) = O((n/k) + n + k).
+	 * The total time by all recursions is O((n-1)/(k-1) * [k + (n/k) + (n+k)]). This simplifies
 	 * to O(n^2/k^2 + n^2/k + n). The term n^2/k^2 is of lower order than n^2/k, so it can be
 	 * disregarded. Thus, the simplified version is O(n^2/k + n).
 	 * 
