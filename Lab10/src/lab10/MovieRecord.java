@@ -27,16 +27,16 @@ public class MovieRecord implements Comparable<MovieRecord> {
 	}
 
 	// purely based on ratings
-    public int compareTo(MovieRecord m) {
-        return this.rating - m.rating;
-    }
+//    public int compareTo(MovieRecord m) {
+//        return this.rating - m.rating;
+//    }
 
     /* Written by Krish A. Patel */
 	// also take into account title alphabetic order
-//	public int compareTo(MovieRecord m)
-//	{
-//		int diff = this.rating - m.rating;
-//		return diff == 0 ? -m.title.compareTo(this.title) : diff;
-//	}
+	public int compareTo(MovieRecord m)
+	{
+		int diff = this.rating - m.rating;
+		return diff == 0 ? -m.title.compareTo(this.title) : diff;
+	}
 
 }

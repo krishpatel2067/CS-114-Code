@@ -44,7 +44,7 @@ public class SortMovies {
 		// Insert code here for sorting array.
 		int sampStart = (int) (B.length / 2.5);
 		int sampEnd = (int) (B.length / 2.4999);
-		
+
 		sampStart = 0;
 		sampEnd = 50;
 
@@ -79,28 +79,28 @@ public class SortMovies {
 		System.out.println("Time = " + (end - start));
 		prt(B, sampStart, sampEnd, "\t");
 		System.out.println();
-		
-//      // quick sort (STACK OVERFLOW)
-//      B = A.clone();
-//      start = System.currentTimeMillis();
-//      srts.quicksort(B);
-//      end = System.currentTimeMillis();
-//      
-//      System.out.print("Quick sort finished: ");
-//      System.out.println("Time = "+(end-start));
-//      prt(B, sampStart, sampEnd, "\t");
-//      System.out.println();
-		
-//		// hybrid quick sort (STACK OVERFLOW)
-//		B = A.clone();
-//		start = System.currentTimeMillis();
-//		srts.hqsort(B, 0, B.length - 1);
-//		end = System.currentTimeMillis();
-//
-//		System.out.print("Hybrid quick sort finished: ");
-//		System.out.println("Time = " + (end - start));
-//		prt(B, sampStart, sampEnd, "\t");
-//		System.out.println();
+
+		// quick sort (STACK OVERFLOW)
+		B = A.clone();
+		start = System.currentTimeMillis();
+		srts.quicksort(B);
+		end = System.currentTimeMillis();
+
+		System.out.print("Quick sort finished: ");
+		System.out.println("Time = " + (end - start));
+		prt(B, sampStart, sampEnd, "\t");
+		System.out.println();
+
+		// hybrid quick sort (STACK OVERFLOW)
+		B = A.clone();
+		start = System.currentTimeMillis();
+		srts.hqsort(B, 0, B.length - 1);
+		end = System.currentTimeMillis();
+
+		System.out.print("Hybrid quick sort finished: ");
+		System.out.println("Time = " + (end - start));
+		prt(B, sampStart, sampEnd, "\t");
+		System.out.println();
 
 		// Print out the sorted records.
 
