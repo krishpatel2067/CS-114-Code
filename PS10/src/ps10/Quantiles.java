@@ -1,3 +1,8 @@
+/* 
+ * Krish A. Patel
+ * Updated 11/12/2024
+ * Due 11/13/2024
+ * */
 package ps10;
 
 import java.io.File;
@@ -25,27 +30,24 @@ public class Quantiles {
 		}
 		
 		int n = incomesAl.size();
-//		n = 10000000;
 		System.out.println("# income values: " + n);
 		
 		int[] incomes = new int[n];
 		for (int i = 0; i < incomes.length; i++)
 			incomes[i] = incomesAl.get(i);
-//		for (int i = 0; i < incomes.length; i++)
-//			incomes[i] = i + 1;
-//		
+		
 		Scanner userInput = new Scanner(System.in);
-		System.out.println("To find the k quantiles of the incomes. Enter value for k:  ");
+		System.out.print("Enter value for k: ");
 		int k = userInput.nextInt();
 		
 		System.out.println(k + " quantiles of incomes: ");
-		for (int j = k - 1; j >= 1; j--)
-		{
-			System.out.println(j * Math.ceilDiv(n, k));
+				
+		// stack overflow
+		for (int j = 1; j < k; j++)
 			System.out.println("\t" + Select.select(incomes, 0, incomes.length - 1, j * Math.ceilDiv(n, k)));
-		}
 		
 		userInput.close();
+		System.out.println("Finished");
 	}
 
 }
