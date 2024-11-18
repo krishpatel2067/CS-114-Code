@@ -76,11 +76,11 @@ public class RandomGraph {
   }
 
   static void PreVisit(Graph G, int v) {
-    //System.out.println("");
+    System.out.println("entering " + v);
   }
 
   static void PostVisit(Graph G, int v) {
-    //System.out.println("");
+    System.out.println("leaving " + v);
   }
 
     static void graphTraverse(Graph G) {
