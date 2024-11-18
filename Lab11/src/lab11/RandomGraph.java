@@ -14,8 +14,7 @@ import java.util.Random;
 
 public class RandomGraph {
 
-	public static Graphm createGraph(int n)
-	{
+	public static Graphm createGraph(int n) {
 		double p = 0.06; // probability that an edge is present
 		long seed = 123; // pseudo-random number generator seed
 		Random rng = new Random(seed);
@@ -33,15 +32,15 @@ public class RandomGraph {
 				}
 			}
 		}
-		
+
 		return graph;
 	}
-	
+
 	public static void main(String[] args) {
 
 		int n = 30; // number of vertices
 		Graphm graph = createGraph(n);
-		
+
 		System.out.println("Adjacency matrix:");
 		for (int i = 0; i < n; ++i) {
 			for (int j = 0; j < n; ++j) {
@@ -56,42 +55,40 @@ public class RandomGraph {
 //		graphTraverse(graph);
 //		BFS(graph, 1);
 //		marks(graph);
-		
-		int maxDist = 0;			// aka diameter
-		
+
+		int maxDist = 0; // aka diameter
+
 		System.out.println("Distances:");
 		for (int i = 0; i < n; ++i) {
-			BFS(graph, i);				// marks all the distances from vertex i
+			BFS(graph, i); // marks all the distances from vertex i
 //			marks(graph);
 			int[] distances = graph.Mark;
 			graph = createGraph(n);
 			for (int j = 0; j < n; ++j) {
 				int dist = (distances[j] - 1);
-				
+
 				if (dist > maxDist)
 					maxDist = dist;
-				
+
 				System.out.print((dist == -1 ? "x" : dist) + " ");
 			}
 			System.out.println();
 		}
-		
+
 		graph = createGraph(n);
-		
+
 		int components = 0;
 		ArrayList<Integer> vertices = new ArrayList<>();
-		
+
 		for (int i = 0; i < n; i++)
 			vertices.add(i);
-		
+
 		System.out.println("Diameter: " + maxDist);
-		
-		while (!vertices.isEmpty())
-		{
+
+		while (!vertices.isEmpty()) {
 			ArrayList<Integer> visited = componentsBFS(graph, vertices.get(0));
-			
-			for (Integer v : visited)
-			{
+
+			for (Integer v : visited) {
 				int index = vertices.indexOf(v);
 				if (index != -1)
 					vertices.remove(index);
@@ -101,12 +98,10 @@ public class RandomGraph {
 		System.out.println("Number of connected components: " + components);
 		System.out.println("Finished");
 	}
-	
-	static void marks(Graphm graph)
-	{
+
+	static void marks(Graphm graph) {
 		System.out.print("marks: ");
-		for (int i : graph.Mark)
-		{
+		for (int i : graph.Mark) {
 			System.out.print(i + " ");
 		}
 		System.out.println();
@@ -140,11 +135,10 @@ public class RandomGraph {
 			PostVisit(G, v); // Take appropriate action
 		}
 	}
-	
-	
+
 	static ArrayList<Integer> componentsBFS(Graph G, int start) {
 		ArrayList<Integer> visited = new ArrayList<>();
-		
+
 		LinkedList<Integer> Q = new LinkedList<Integer>();
 		Q.addLast(start);
 		G.setMark(start, 1);
@@ -162,7 +156,7 @@ public class RandomGraph {
 				}
 			PostVisit(G, v); // Take appropriate action
 		}
-		
+
 		return visited;
 	}
 
