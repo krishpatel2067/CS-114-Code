@@ -4,6 +4,7 @@
  */
 package lab11;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -12,7 +13,7 @@ public class RandomGraph {
 	public static Graphm createGraph(int n)
 	{
 		double p = 0.3; // probability that an edge is present
-		long seed = 123; // pseudo-random number generator seed
+		long seed = 999; // pseudo-random number generator seed
 		Random rng = new Random(seed);
 		Graphm graph = new Graphm(n); // use the adjacency matrix implementation
 
@@ -50,19 +51,51 @@ public class RandomGraph {
 
 //		graphTraverse(graph);
 //		BFS(graph, 1);
-		marks(graph);
+//		marks(graph);
 		
 		System.out.println("Distances:");
 		for (int i = 0; i < n; ++i) {
 			BFS(graph, i);				// marks all the distances from vertex i
+//			marks(graph);
 			int[] distances = graph.Mark;
 			graph = createGraph(n);
 			for (int j = 0; j < n; ++j) {
 				int dist = (distances[j] - 1);
+				
 				System.out.print((dist == -1 ? "x" : dist) + " ");
 			}
 			System.out.println();
 		}
+		
+		graph = createGraph(n);
+		
+		int components = 0;
+		ArrayList<Integer> vertices = new ArrayList<>();
+		
+		for (int i = 0; i < n; i++)
+		{
+			vertices.add(i);
+		}
+		
+		System.out.println(vertices);
+		
+		while (!vertices.isEmpty())
+		{
+			ArrayList<Integer> visited = componentsBFS(graph, vertices.get(0));
+			System.out.println("visited: " + visited);
+			
+			for (Integer v : visited)
+			{
+				int index = vertices.indexOf(v);
+				
+				if (index != -1)
+				{
+					vertices.remove(index);
+				}
+			}
+			components++;
+		}
+		System.out.println(components + " components");
 		
 		System.out.println("Finished");
 
@@ -105,6 +138,31 @@ public class RandomGraph {
 				}
 			PostVisit(G, v); // Take appropriate action
 		}
+	}
+	
+	
+	static ArrayList<Integer> componentsBFS(Graph G, int start) {
+		ArrayList<Integer> visited = new ArrayList<>();
+		
+		LinkedList<Integer> Q = new LinkedList<Integer>();
+		Q.addLast(start);
+		G.setMark(start, 1);
+		int d = 0;
+		while (Q.size() > 0) { // Process each vertex on Q
+			++d;
+			int v = Q.removeFirst();
+			PreVisit(G, v); // Take appropriate action
+			visited.add(v);
+			for (int w = G.first(v); w < G.n(); w = G.next(v, w))
+				if (G.getMark(w) == 0) { // Put neighbors on Q
+					G.setMark(w, G.getMark(v) + 1);
+					Q.addLast(w);
+					visited.add(w);
+				}
+			PostVisit(G, v); // Take appropriate action
+		}
+		
+		return visited;
 	}
 
 	static int getDistanceBFS(Graph G, int start, int target) {
