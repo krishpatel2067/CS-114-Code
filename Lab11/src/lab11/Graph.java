@@ -1,3 +1,4 @@
+/* Given by professor */
 package lab11;
 
 public interface Graph { // Graph class ADT

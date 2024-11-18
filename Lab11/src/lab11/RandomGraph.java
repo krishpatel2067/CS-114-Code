@@ -1,3 +1,7 @@
+/* Given by professor
+ * Modified by Krish A. Patel
+ * 11/18/2024
+ * */
 
 /*
  * Lab11 starter code; description in Lab11.pdf.
@@ -12,8 +16,8 @@ public class RandomGraph {
 
 	public static Graphm createGraph(int n)
 	{
-		double p = 0.3; // probability that an edge is present
-		long seed = 999; // pseudo-random number generator seed
+		double p = 0.06; // probability that an edge is present
+		long seed = 123; // pseudo-random number generator seed
 		Random rng = new Random(seed);
 		Graphm graph = new Graphm(n); // use the adjacency matrix implementation
 
@@ -35,7 +39,7 @@ public class RandomGraph {
 	
 	public static void main(String[] args) {
 
-		int n = 5; // number of vertices
+		int n = 30; // number of vertices
 		Graphm graph = createGraph(n);
 		
 		System.out.println("Adjacency matrix:");
@@ -53,6 +57,8 @@ public class RandomGraph {
 //		BFS(graph, 1);
 //		marks(graph);
 		
+		int maxDist = 0;			// aka diameter
+		
 		System.out.println("Distances:");
 		for (int i = 0; i < n; ++i) {
 			BFS(graph, i);				// marks all the distances from vertex i
@@ -61,6 +67,9 @@ public class RandomGraph {
 			graph = createGraph(n);
 			for (int j = 0; j < n; ++j) {
 				int dist = (distances[j] - 1);
+				
+				if (dist > maxDist)
+					maxDist = dist;
 				
 				System.out.print((dist == -1 ? "x" : dist) + " ");
 			}
@@ -73,32 +82,24 @@ public class RandomGraph {
 		ArrayList<Integer> vertices = new ArrayList<>();
 		
 		for (int i = 0; i < n; i++)
-		{
 			vertices.add(i);
-		}
 		
-		System.out.println(vertices);
+		System.out.println("Diameter: " + maxDist);
 		
 		while (!vertices.isEmpty())
 		{
 			ArrayList<Integer> visited = componentsBFS(graph, vertices.get(0));
-			System.out.println("visited: " + visited);
 			
 			for (Integer v : visited)
 			{
 				int index = vertices.indexOf(v);
-				
 				if (index != -1)
-				{
 					vertices.remove(index);
-				}
 			}
 			components++;
 		}
-		System.out.println(components + " components");
-		
+		System.out.println("Number of connected components: " + components);
 		System.out.println("Finished");
-
 	}
 	
 	static void marks(Graphm graph)
@@ -165,34 +166,34 @@ public class RandomGraph {
 		return visited;
 	}
 
-	static int getDistanceBFS(Graph G, int start, int target) {
-		LinkedList<Integer> Q = new LinkedList<Integer>();
-//		System.out.println("target: " + target);
-		Q.addLast(start);
-		G.setMark(start, 1);
-		int d = 0;
-		while (Q.size() > 0) { // Process each vertex on Q
-			++d;
-			int v = Q.removeFirst();
-			if (v == target) {
-//				System.out.println("distance between " + start + " and " + target + " = " + (d));
-				return d;
-			}
-//			PreVisit(G, v); // Take appropriate action
-			for (int w = G.first(v); w < G.n(); w = G.next(v, w)) {
-				if (w == target) {
-//					System.out.println("distance between " + start + " and " + target + " = " + (d));
-					return d;
-				}
-				if (G.getMark(w) == 0) { // Put neighbors on Q
-					G.setMark(w, G.getMark(v) + 1);
-					Q.addLast(w);
-				}
-//				PostVisit(G, v); // Take appropriate action
-			}
-		}
-		return 0;
-	}
+//	static int getDistanceBFS(Graph G, int start, int target) {
+//		LinkedList<Integer> Q = new LinkedList<Integer>();
+////		System.out.println("target: " + target);
+//		Q.addLast(start);
+//		G.setMark(start, 1);
+//		int d = 0;
+//		while (Q.size() > 0) { // Process each vertex on Q
+//			++d;
+//			int v = Q.removeFirst();
+//			if (v == target) {
+////				System.out.println("distance between " + start + " and " + target + " = " + (d));
+//				return d;
+//			}
+////			PreVisit(G, v); // Take appropriate action
+//			for (int w = G.first(v); w < G.n(); w = G.next(v, w)) {
+//				if (w == target) {
+////					System.out.println("distance between " + start + " and " + target + " = " + (d));
+//					return d;
+//				}
+//				if (G.getMark(w) == 0) { // Put neighbors on Q
+//					G.setMark(w, G.getMark(v) + 1);
+//					Q.addLast(w);
+//				}
+////				PostVisit(G, v); // Take appropriate action
+//			}
+//		}
+//		return 0;
+//	}
 
 	static void PreVisit(Graph G, int v) {
 //		System.out.println("entering " + v);
