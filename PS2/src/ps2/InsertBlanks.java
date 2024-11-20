@@ -46,6 +46,7 @@ public class InsertBlanks {
 			return;
 		}
 		
+		
 		// Gettysburg
 		try {
 			File gettysburgTxt = new File("Gettysburg.txt");
@@ -58,6 +59,7 @@ public class InsertBlanks {
 			System.out.println("`gettysburg.txt` file not found");
 			return;
 		}
+		
 		
 		// BriarRose
 		try {
@@ -74,13 +76,32 @@ public class InsertBlanks {
 		
 		// -------------------------------------------------------------------------
 		
-		ArrayList<String> wordsWithBlanks = splitIntoWords(gettysburg);
+		String str = "";
+		
+		for (int i = 0; i < 100; i++)
+			str += "a";
+		
+		str += "z";
+		
+		long start = System.currentTimeMillis();
+		ArrayList<String> wordsWithBlanks = splitIntoWords(str);
+		
+		System.out.println("Result of inserting blanks in `" + str + "`: ");
+		
+		for (String word : wordsWithBlanks)
+			System.out.print(word + DELIMITER);
+		
+		System.out.println();
+		System.out.println((System.currentTimeMillis() - start));
+
+		wordsWithBlanks = splitIntoWords(gettysburg);
 		
 		System.out.println("Result of inserting blanks in `gettysburg.txt`: ");
 		
 		for (String word : wordsWithBlanks)
 			System.out.print(word + DELIMITER);
 		
+
 		wordsWithBlanks = splitIntoWords("ouncewabblyscruffyorbitalrecusemarblertelfordstangrampiaster");
 		
 		System.out.println("\n\nResult of inserting blanks in `BriarRose.txt`: ");
