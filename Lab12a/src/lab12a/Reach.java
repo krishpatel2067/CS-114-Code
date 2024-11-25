@@ -8,7 +8,6 @@ import java.util.Scanner;
 import java.util.ArrayList;
 //import java.util.Collections;
 
-
 public class Reach {
 
     static int dd;
@@ -55,15 +54,36 @@ public class Reach {
 
         Scanner input = new Scanner(System.in);
         while (true) {
-            System.out.println("Enter source and destination:");
+            System.out.print("Enter source and destination: ");
             int s = input.nextInt();
             int d = input.nextInt();
             if((s<0) || (d<0)) break;
 
 
             // Add code to determine if d is reachable from s.
-
-
+            ArrayList<Integer> visited = new ArrayList<>();
+            int curr = s;
+            boolean pathExists = true;
+            
+            while (curr != d)
+            {
+            	if (visited.contains(curr))
+            	{
+            		pathExists = false;
+            		break;
+            	}
+            	
+            	visited.add(curr);
+            	int index = From.indexOf(curr);
+            	curr = To.get(index);
+            }
+            
+            visited.add(curr);
+            
+            if (pathExists)
+            	System.out.println("A path exists from " + s + " to " + d);
+            else
+            	System.out.println("A path DOES NOT exist from " + s + " to " + d);
         }
         input.close();
     }
