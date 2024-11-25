@@ -14,6 +14,7 @@ public class Reach {
     static int dd;
     static final int UNVISITED = 0;
     static final int VISITED = 1;
+    static final int PATH = 2;
 
     public static void main(String[] args) {
 
@@ -68,6 +69,7 @@ public class Reach {
             /* Krish A. Patel */
             resetBFS(graph, s);
             boolean pathExists = false;
+            int dist = -1;
             
             LinkedList<Integer> list = new LinkedList<>();
         	list.addLast(s);
@@ -81,6 +83,7 @@ public class Reach {
         		if (curr == d)
         		{
         			pathExists = true;
+        			dist = graph.getMark(curr);
 //        			System.out.println("curr matches d");
         			break;
         		}
@@ -88,7 +91,10 @@ public class Reach {
         		for (int v = graph.first(curr); v < n && !pathExists; v = graph.next(curr, v))
         		{
         			if (v == d)
+        			{
     					pathExists = true;
+    					dist = graph.getMark(curr);
+        			}
         			
 //        			System.out.println("\tCurr: " + curr);
 //        			System.out.print("\t" + graph.getMark(v));
@@ -96,7 +102,7 @@ public class Reach {
         			
         			if (graph.getMark(v) == UNVISITED)
         			{
-        				graph.setMark(v, VISITED);
+        				graph.setMark(v, graph.getMark(curr) + 1);
         				list.addLast(v);
 //        				System.out.println("\t" + list);
         			}
@@ -104,7 +110,7 @@ public class Reach {
         	}
             
             if (pathExists)
-            	System.out.println("A path exists from " + s + " to " + d);
+            	System.out.println("A path exists from " + s + " to " + d + " with a distance of " + dist);
             else
             	System.out.println("A path DOES NOT exist from " + s + " to " + d);
         }
