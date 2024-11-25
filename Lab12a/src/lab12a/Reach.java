@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Collection;
 //import java.util.Collections;
 
 public class Reach {
@@ -58,27 +59,33 @@ public class Reach {
             int s = input.nextInt();
             int d = input.nextInt();
             if((s<0) || (d<0)) break;
-
-
-            // Add code to determine if d is reachable from s.
-            ArrayList<Integer> visited = new ArrayList<>();
-            int curr = s;
-            boolean pathExists = true;
             
-            while (curr != d)
+            resetBFS(graph, s);
+            
+            // Add code to determine if d is reachable from s.
+            int curr = s;
+            boolean pathExists = false;
+            
+            LinkedList<Integer> neighbors = new LinkedList<>();
+            
+            neighbors.addAll((Collection<? extends Integer>) graph.neighbors(s));
+            
+            while (neighbors.size() > 0)
             {
-            	if (visited.contains(curr))
+            	int v = neighbors.pollFirst();
+            	
+            	if (v == d)
             	{
-            		pathExists = false;
+            		pathExists = true;
             		break;
             	}
-            	
-            	visited.add(curr);
-            	int index = From.indexOf(curr);
-            	curr = To.get(index);
+            	else
+            	{
+            		neighbors.addAll((Collection<? extends Integer>) graph.neighbors(v));
+            	}
             }
             
-            visited.add(curr);
+            System.out.println(neighbors);
             
             if (pathExists)
             	System.out.println("A path exists from " + s + " to " + d);
@@ -88,4 +95,25 @@ public class Reach {
         input.close();
     }
 
+    public static void resetBFS(Graphl graph, int start)
+    {
+    	LinkedList<Integer> list = new LinkedList<>();
+    	list.addLast(start);
+    	graph.setMark(start, 0);
+    	
+    	while (list.size() > 0)
+    	{
+    		int curr = list.removeFirst();
+    		
+    		for (int v = graph.first(curr); v < graph.n(); v = graph.next(start, v))
+    		{
+    			if (graph.getMark(v) != 0)
+    			{
+    				graph.setMark(v, 0);
+    				list.addLast(v);
+    			}
+    		}
+    	}
+    }
+    
 }
