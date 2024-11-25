@@ -102,7 +102,8 @@ public class Reach {
         			
         			if (graph.getMark(v) == UNVISITED)
         			{
-        				graph.setMark(v, graph.getMark(curr) + 1);
+        				graph.setMark(v, curr);
+        				graph.setEdge(v, curr, 1);		// make this bidirectional
         				list.addLast(v);
 //        				System.out.println("\t" + list);
         			}
@@ -110,7 +111,46 @@ public class Reach {
         	}
             
             if (pathExists)
+            {
+            	// trace back the path
+            	LinkedList<Integer> pathList = new LinkedList<>();
+            	LinkedList<Integer> list2 = new LinkedList<>();
+            	list2.addLast(d);
+            	pathList.addFirst(d);
+            	boolean pathFound = false;
+            	
+            	while (list2.size() > 0 && !pathFound)
+            	{
+            		int curr = list2.removeFirst();
+            		int currMark = graph.getMark(curr);
+            		
+//            		System.out.println("curr: " + curr);
+//            		System.out.println("currMark: " + currMark);
+            		
+            		for (int v : graph.neighbors(curr))
+            		{
+            			if (pathFound)
+            				break;
+            			
+            			// if the current node's previous node matches this one
+            			// it's one step towards the source
+//            			System.out.println("\t" + v);
+            			
+            			if (v == s)
+            				pathFound = true;
+            			
+            			if (currMark == v)
+            			{
+            				if (!pathList.contains(v))
+            					pathList.addFirst(v);
+            				list2.addLast(v);
+            			}
+            		}
+            	}
+            	
             	System.out.println("A path exists from " + s + " to " + d + " with a distance of " + dist);
+            	System.out.println("The path is " + pathList);
+            }
             else
             	System.out.println("A path DOES NOT exist from " + s + " to " + d);
         }
