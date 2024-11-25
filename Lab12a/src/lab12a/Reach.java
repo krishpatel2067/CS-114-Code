@@ -12,6 +12,8 @@ import java.util.Collection;
 public class Reach {
 
     static int dd;
+    static final int UNVISITED = 0;
+    static final int VISITED = 1;
 
     public static void main(String[] args) {
 
@@ -60,32 +62,46 @@ public class Reach {
             int d = input.nextInt();
             if((s<0) || (d<0)) break;
             
-            resetBFS(graph, s);
+            
             
             // Add code to determine if d is reachable from s.
-            int curr = s;
+            /* Krish A. Patel */
+            resetBFS(graph, s);
             boolean pathExists = false;
             
-            LinkedList<Integer> neighbors = new LinkedList<>();
-            
-            neighbors.addAll((Collection<? extends Integer>) graph.neighbors(s));
-            
-            while (neighbors.size() > 0)
-            {
-            	int v = neighbors.pollFirst();
-            	
-            	if (v == d)
-            	{
-            		pathExists = true;
-            		break;
-            	}
-            	else
-            	{
-            		neighbors.addAll((Collection<? extends Integer>) graph.neighbors(v));
-            	}
-            }
-            
-            System.out.println(neighbors);
+            LinkedList<Integer> list = new LinkedList<>();
+        	list.addLast(s);
+        	graph.setMark(s, VISITED);
+        	
+        	while (list.size() > 0 && !pathExists)
+        	{
+//        		System.out.println(list);
+        		int curr = list.removeFirst();
+        		
+        		if (curr == d)
+        		{
+        			pathExists = true;
+//        			System.out.println("curr matches d");
+        			break;
+        		}
+        		
+        		for (int v = graph.first(curr); v < n && !pathExists; v = graph.next(curr, v))
+        		{
+        			if (v == d)
+    					pathExists = true;
+        			
+//        			System.out.println("\tCurr: " + curr);
+//        			System.out.print("\t" + graph.getMark(v));
+//        			System.out.println();
+        			
+        			if (graph.getMark(v) == UNVISITED)
+        			{
+        				graph.setMark(v, VISITED);
+        				list.addLast(v);
+//        				System.out.println("\t" + list);
+        			}
+        		}
+        	}
             
             if (pathExists)
             	System.out.println("A path exists from " + s + " to " + d);
@@ -99,7 +115,7 @@ public class Reach {
     {
     	LinkedList<Integer> list = new LinkedList<>();
     	list.addLast(start);
-    	graph.setMark(start, 0);
+    	graph.setMark(start, UNVISITED);
     	
     	while (list.size() > 0)
     	{
@@ -107,9 +123,9 @@ public class Reach {
     		
     		for (int v = graph.first(curr); v < graph.n(); v = graph.next(start, v))
     		{
-    			if (graph.getMark(v) != 0)
+    			if (graph.getMark(v) != UNVISITED)
     			{
-    				graph.setMark(v, 0);
+    				graph.setMark(v, UNVISITED);
     				list.addLast(v);
     			}
     		}
