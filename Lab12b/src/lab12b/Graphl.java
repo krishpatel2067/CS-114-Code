@@ -61,7 +61,7 @@ class Graphl implements Graph {
 	/** Delete an edge */
 	public void delEdge(int i, int j) {
 		if (isEdge(i, j)) {
-			vertex[i].remove(j);
+			vertex[i].remove(vertex[i].indexOf(j));
 			numEdge--;
 		}
 	}
