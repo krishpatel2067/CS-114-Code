@@ -71,10 +71,11 @@ public class Reach {
 			 * Written by Krish A. Patel 11/25/2024
 			 */
 			// mark all as UNVISITED
-			resetUsingBFS(graph, s);
 			boolean pathExists = false;
 			int dist = -1;
 
+			System.out.println("Distance from " + s + " to " + d + ": " + getDistanceUsingBFS(graph, s, d));
+			
 			LinkedList<Integer> list = new LinkedList<>();
 			list.addLast(s);
 			graph.setMark(s, VISITED);
@@ -140,9 +141,56 @@ public class Reach {
 			} else
 				System.out.println("A path DOES NOT exist from " + s + " to " + d);
 
+			resetUsingBFS(graph, s);
 			System.out.println();
 		}
 		input.close();
+	}
+	
+	/*
+	 * Written by Krish A. Patel 12/2/2024
+	 * Precondition: a path exists from `start` to `end`
+	 * */
+	public static int getDistanceUsingBFS(Graphl graph, int start, int end)
+	{
+		if (start == end)
+			return 0;
+		
+		resetUsingBFS(graph, start);
+		
+		LinkedList<Integer> list = new LinkedList<>();
+		int distance = -1;
+		boolean reachedEnd = false;
+		
+		list.add(start);
+		graph.setMark(start, 1);
+		
+		while (list.size() > 0 && !reachedEnd)
+		{
+			int curr = list.pollFirst();
+			
+			if (curr == end)
+			{
+				reachedEnd = true;
+			}
+			
+			for (int v = graph.first(curr); v < graph.n() && !reachedEnd; v = graph.next(curr, v))
+			{
+				if (graph.getMark(v) == UNVISITED) {
+					graph.setMark(v, graph.getMark(curr) + 1);
+					list.add(v);
+				}
+				
+				if (v == end)
+				{
+					reachedEnd = true;
+					distance = graph.getMark(v);
+				}
+			}
+		}
+		
+		resetUsingBFS(graph, start);
+		return distance - 1;
 	}
 
 	/*
@@ -156,7 +204,7 @@ public class Reach {
 		while (list.size() > 0) {
 			int curr = list.removeFirst();
 
-			for (int v = graph.first(curr); v < graph.n(); v = graph.next(start, v)) {
+			for (int v = graph.first(curr); v < graph.n(); v = graph.next(curr, v)) {
 				if (graph.getMark(v) != UNVISITED) {
 					graph.setMark(v, UNVISITED);
 					list.addLast(v);
