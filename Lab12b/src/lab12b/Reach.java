@@ -9,10 +9,7 @@ import java.util.ArrayList;
 
 public class Reach {
 
-	static int dd;
-	static final int UNVISITED = 0;
-	static final int VISITED = 1;
-	static final int PATH = 2;
+	static final int UNVISITED = -1;
 
 	public static void main(String[] args) {
 
@@ -70,10 +67,10 @@ public class Reach {
 			/*
 			 * Written by Krish A. Patel 12/2/2024
 			 */
-			resetUsingBFS(graph, s);			// mark all as UNVISITED
+			unvisitAll(graph, s);			// mark all as UNVISITED
 			int dist = getDistanceUsingBFS(graph, s, d);
 
-			resetUsingBFS(graph, s);
+			unvisitAll(graph, s);
 
 			// if the path exists
 			if (dist >= 0) {
@@ -177,19 +174,20 @@ public class Reach {
 			if (curr == end)
 			{
 				reachedEnd = true;
+				distance = graph.getMark(curr);
 			}
 			
 			for (int v = graph.first(curr); v < graph.n() && !reachedEnd; v = graph.next(curr, v))
 			{
 				if (graph.getMark(v) == UNVISITED) {
+					if (v == end)
+					{
+						reachedEnd = true;
+						distance = graph.getMark(curr) + 1;
+					}
+					
 					graph.setMark(v, graph.getMark(curr) + 1);
 					list.add(v);
-				}
-				
-				if (v == end)
-				{
-					reachedEnd = true;
-					distance = graph.getMark(v);
 				}
 			}
 		}
@@ -200,21 +198,40 @@ public class Reach {
 	/*
 	 * Written by Krish A. Patel 12/2/2024
 	 */
-	public static void resetUsingBFS(Graphl graph, int start) {
-		LinkedList<Integer> list = new LinkedList<>();
-		list.addLast(start);
-		graph.setMark(start, UNVISITED);
-
-		while (list.size() > 0) {
-			int curr = list.removeFirst();
-
-			for (int v = graph.first(curr); v < graph.n(); v = graph.next(curr, v)) {
-				if (graph.getMark(v) != UNVISITED) {
-					graph.setMark(v, UNVISITED);
-					list.addLast(v);
-				}
-			}
-		}
+	// reset the graph by marking all nodes as UNVISITED
+	public static void unvisitAll(Graphl graph, int start) {
+		// this method works because it guarantees visiting (or UNvisiting) all nodes
+		for (int i = 0; i < graph.Mark.length; i++)
+			graph.setMark(i, UNVISITED);
+		
+		// BFS keeps skipping node 48256 so it messes up the distance when doing:
+		/*
+		 * s: 200000 d: 400000 (d = 14 - correct)
+		 * s: 29387 d: 1728    (d = 9 - correct)
+		 * s: 200000 d: 400000 (d = 15 - incorrect)
+		 * */
+//		LinkedList<Integer> list = new LinkedList<>();
+//		list.addLast(start);
+//		graph.setMark(start, UNVISITED);
+		
+//		while (list.size() > 0) {
+//			int curr = list.removeFirst();
+////			
+////			if (curr == 48256)
+////				System.out.println("CURR == 48256 " + graph.getMark(curr));
+////			graph.setMark(curr, UNVISITED);
+//			
+//			for (int v = graph.first(curr); v < graph.n(); v = graph.next(curr, v)) {
+//				
+//				
+//				if (graph.getMark(v) != UNVISITED) {
+//					if (v == 597923 || v == 223236 || v == 48256)
+//						System.out.println("Mark of " + v + " = " + graph.getMark(v) + " " + (graph.getMark(v) != UNVISITED));
+//					list.addLast(v);
+//				}
+//				graph.setMark(v, UNVISITED);
+//			}
+//		}
 	}
 
 }
