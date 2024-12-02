@@ -68,10 +68,9 @@ public class Reach {
 			// Add code to determine if d is reachable from s.
 			// -----------------------------------------------------------------------------
 			/*
-			 * Written by Krish A. Patel 11/25/2024
+			 * Written by Krish A. Patel 12/2/2024
 			 */
-			// mark all as UNVISITED
-			resetUsingBFS(graph, s);
+			resetUsingBFS(graph, s);			// mark all as UNVISITED
 			int dist = getDistanceUsingBFS(graph, s, d);
 
 			resetUsingBFS(graph, s);
@@ -82,7 +81,7 @@ public class Reach {
 				LinkedList<Integer> pathList = getPath(graph, s, d);
 
 				System.out.println("Distance from " + s + " to " + d + ": " + dist);
-				System.out.println("Distance: " + (pathList.size() - 1));
+//				System.out.println("Distance: " + (pathList.size() - 1));
 				System.out.println("Path: " + pathList);
 			} else
 				System.out.println("A path DOES NOT exist from " + s + " to " + d);
@@ -92,53 +91,40 @@ public class Reach {
 		input.close();
 	}
 	
+	/*
+	 * Written by Krish A. Patel 12/2/2024
+	 * Precondition: a path exists from `start` to `end`
+	 * */
+	// returns a path from start to end
 	public static LinkedList<Integer> getPath(Graphl graph, int start, int end)
 	{
-		LinkedList<Integer[]> setEdges = markPath(graph, start, end);
+		markPath(graph, start, end);
 		LinkedList<Integer> pathList = new LinkedList<>();
-		boolean pathFound = false;
-
-		LinkedList<Integer> list = new LinkedList<>();
-		list.addLast(end);
+		boolean reachedStart = false;
+		int curr = end;
+		
 		pathList.addFirst(end);
 
-		while (list.size() > 0 && !pathFound) {
-			int curr = list.removeFirst();
-			int currMark = graph.getMark(curr);
-
-			// iterate over all the neighbors to include "last" neighbors too
-			// preferably the "last" neighbors, but no such method
-			for (int v : graph.neighbors(curr)) {
-				if (pathFound)
-					break;
-
-				// if the current node's previous node matches this one
-				// it's one step towards the source
-				if (v == start)
-					pathFound = true;
-
-				if (currMark == v) {
-					if (!pathList.contains(v))
-						pathList.addFirst(v);
-					list.addLast(v);
-				}
+		while (!reachedStart) {
+			// each node points to the predecessor
+			if (curr == start)
+				reachedStart = true;
+			else {
+				curr = graph.getMark(curr);
+				pathList.addFirst(curr);
 			}
-		}
-		
-		while (setEdges.size() > 0)
-		{
-			Integer[] curr = setEdges.pollFirst();
-//			System.out.println(curr[0] + "  " + curr[1]);
-			graph.delEdge(curr[0], curr[1]);
 		}
 		
 		return pathList;
 	}
 	
-	public static LinkedList<Integer[]> markPath(Graphl graph, int start, int end)
+	/*
+	 * Written by Krish A. Patel 12/2/2024
+	 * Precondition: a path exists from `start` to `end`
+	 * */
+	public static void markPath(Graphl graph, int start, int end)
 	{
 		LinkedList<Integer> list = new LinkedList<>();
-		LinkedList<Integer[]> setEdges = new LinkedList<>();
 		boolean reachedEnd = false;
 		
 		list.add(start);
@@ -156,13 +142,6 @@ public class Reach {
 			{
 				if (graph.getMark(v) == UNVISITED) {
 					graph.setMark(v, curr);
-					// flip the direction
-					if (!graph.isEdge(v, curr))
-					{
-						Integer[] arr = {v, curr};
-						graph.setEdge(v, curr, 1);
-						setEdges.add(arr);
-					}
 					list.add(v);
 				}
 				
@@ -173,13 +152,12 @@ public class Reach {
 			}
 		}
 		
-		return setEdges;
 	}
 	
 	/*
 	 * Written by Krish A. Patel 12/2/2024
-	 * Precondition: a path exists from `start` to `end`
 	 * */
+	// gets the distance (node-to-node) between `start` & `end` or -1 if no path exists
 	public static int getDistanceUsingBFS(Graphl graph, int start, int end)
 	{
 		if (start == end)
