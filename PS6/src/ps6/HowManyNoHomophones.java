@@ -8,7 +8,7 @@ import java.util.Scanner;
 /*
  * Identify English words with the most homophones.
  */
-public class FewestHomophones {
+public class HowManyNoHomophones {
 
   public static void main(String[] args) {
     BST<String, Pronunciation> PDict = new BST<String, Pronunciation>();
@@ -38,22 +38,18 @@ public class FewestHomophones {
       e.printStackTrace();
     }
 
-    int count = 0;
-    int minCount = Integer.MAX_VALUE;
-    Pronunciation P = null;
+    int noHomCount = 0;
+    int homCount = 0;
+    
     for (Pronunciation p : PDict.values()) {
-      count = 0;
+      homCount = 0;
       for (Pronunciation _ : PDict.findAll(p.getPhonemes()))
-        ++count;
-      if (count < minCount) {
-        minCount = count;
-        P = p;
-      }
+        ++homCount;
+      
+      if (homCount == 1)
+    	  noHomCount++;
     }
-    System.out.println("Min homophones= " + minCount);
-    System.out.println(minCount);
-    for (Pronunciation q : PDict.findAll(P.getPhonemes()))
-      System.out.println(q.getPhonemes() + ", " + q.getWord());
+    System.out.println("How many words don't have homophones? " + noHomCount);
     long elapsed = System.currentTimeMillis() - startTime;
     System.out.println("Elapsed time: " + elapsed);
   }

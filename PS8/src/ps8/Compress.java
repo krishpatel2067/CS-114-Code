@@ -134,8 +134,8 @@ public class Compress {
 		/* Written by Krish A. Patel */
 		System.out.println();
 		System.out.println("Approximate sizes: ");
-		System.out.println("\tOriginal: " + nBitsOrig / 8 + " bytes");
-		System.out.println("\tCompressed: " + nBitsComp / 8 + " bytes");
+		System.out.println("\tOriginal: " + nBitsOrig + " bits (" + nBitsOrig/8 + " bytes)");
+		System.out.println("\tCompressed: " + nBitsComp + " bits (" + nBitsComp/8 + " bytes)");
 		System.out.println("Compressed size is " + Math.round(((double) nBitsComp / nBitsOrig) * 100) + "% of original.");
 
 	}
