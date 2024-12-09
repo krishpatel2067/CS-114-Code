@@ -16,6 +16,7 @@ public class FewestHomophones {
     //Pronunciation>();
     //OALDictionary<String, Pronunciation> PDict = new OALDictionary<String, Pronunciation>();
     File file = new File("cmudict.0.7a.txt");
+    final int REQ_LEN = 5;
     // File file = new File("shuffledDictionary.txt");
 
     long startTime = System.currentTimeMillis();
@@ -28,7 +29,9 @@ public class FewestHomophones {
         if (line.substring(0, 3).equals(";;;"))
           continue; // skip comment lines
         Pronunciation p = new Pronunciation(line);
-        PDict.insert(p.getPhonemes(), p);
+        
+        if (p.getWord().length() == REQ_LEN)
+        	PDict.insert(p.getPhonemes(), p);
       }
       scanner.close();
     } catch (FileNotFoundException e) {
@@ -36,19 +39,19 @@ public class FewestHomophones {
     }
 
     int count = 0;
-    int maxCount = 0;
+    int minCount = Integer.MAX_VALUE;
     Pronunciation P = null;
     for (Pronunciation p : PDict.values()) {
       count = 0;
       for (Pronunciation _ : PDict.findAll(p.getPhonemes()))
         ++count;
-      if (count > maxCount) {
-        maxCount = count;
+      if (count < minCount) {
+        minCount = count;
         P = p;
       }
     }
-    //System.out.println("Max. homophones= " + maxCount);
-    System.out.println(maxCount);
+    System.out.println("Min homophones= " + minCount);
+    System.out.println(minCount);
     for (Pronunciation q : PDict.findAll(P.getPhonemes()))
       System.out.println(q.getPhonemes() + ", " + q.getWord());
     long elapsed = System.currentTimeMillis() - startTime;
