@@ -76,7 +76,7 @@ public class MostAnagrams {
 		Scanner sc = new Scanner(System.in);
 
 		System.out.print("How many lines to read from `words.txt`? ");
-//		int maxLines = sc.nextInt();
+		int maxLines = sc.nextInt();
 		sc.close();
 		
 		// word bank (depending on input)
@@ -87,13 +87,13 @@ public class MostAnagrams {
 			File wordsTxt = new File(WORDS_TXT_PATH);
 			Scanner wordsScanner = new Scanner(wordsTxt);
 			
-//			for (int i = 0; i < maxLines && wordsScanner.hasNext(); i++)
-//				allowedWords[i] = wordsScanner.nextLine();
-			for (int i = 0; wordsScanner.hasNext(); i++)
+			for (int i = 0; i < maxLines && wordsScanner.hasNext(); i++)
 			{
-				String word = wordsScanner.nextLine();
-				if (word.length() == 4)
-					allowedWords.add(word);
+				allowedWords.add(wordsScanner.nextLine());
+//			for (int i = 0; wordsScanner.hasNext(); i++)
+//				String word = wordsScanner.nextLine();
+//				if (word.length() == 5)
+//					allowedWords.add(word);
 			}
 			
 			wordsScanner.close();
