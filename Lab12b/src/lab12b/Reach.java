@@ -71,8 +71,8 @@ public class Reach {
 			 * Written by Krish A. Patel 12/11/2024
 			 */
 			unvisitAll(graph, s);			// mark all as UNVISITED
-			DFS(graph, s, d);
-			System.out.println("Distance (according to DFS): " + recCount);
+			DFS(graph, s, d, 0);
+			System.out.println("Number of recursions (according to DFS): " + recCount);
 			unvisitAll(graph, s);
 			
 			int dist = getDistanceUsingBFS(graph, s, d);
@@ -97,18 +97,29 @@ public class Reach {
 	
 	/*
 	 * Written by Krish A. Patel 12/11/2024
+	 * 34686
 	 * */
-	static void DFS(Graph G, int start, int end) {
+	static void DFS(Graph G, int start, int end, int depth) {
 		recCount++;
+		
+		if (start == end)
+		{
+			System.out.println("Depth (DFS): " + (depth + 1));
+			return;
+//			break;
+		}
 		
 		G.setMark(start, VISITED);
 		for (int w = G.first(start); w < G.n(); w = G.next(start, w))
 		{
-			if (G.getMark(w) != VISITED)
-				DFS(G, w, end);
-			
 			if (w == end)
-				break;
+			{
+//				System.out.println("Depth: " + depth);
+//				break;
+			}
+			
+			if (G.getMark(w) != VISITED)
+				DFS(G, w, end, depth + 1);
 		}
 	}
 	

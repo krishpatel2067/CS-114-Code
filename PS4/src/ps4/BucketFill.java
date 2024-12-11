@@ -32,6 +32,7 @@ public class BucketFill {
 				new Bucket(c3), 
 				d);
 		run(initState);
+		System.out.println("Finished");
 	}
 
 	public static void run(BucketState initState)
