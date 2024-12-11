@@ -68,7 +68,7 @@ public class Reach {
 			// Add code to determine if d is reachable from s.
 			// -----------------------------------------------------------------------------
 			/*
-			 * Written by Krish A. Patel 12/2/2024
+			 * Written by Krish A. Patel 12/11/2024
 			 */
 			unvisitAll(graph, s);			// mark all as UNVISITED
 			DFS(graph, s, d);
@@ -95,6 +95,9 @@ public class Reach {
 		input.close();
 	}
 	
+	/*
+	 * Written by Krish A. Patel 12/11/2024
+	 * */
 	static void DFS(Graph G, int start, int end) {
 		recCount++;
 		
