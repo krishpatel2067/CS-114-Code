@@ -12,6 +12,7 @@ public class Reach {
 
 	static final int UNVISITED = -1;
 	static final int VISITED = 1;
+	static int recCount = 0;
 
 	public static void main(String[] args) {
 
@@ -70,8 +71,8 @@ public class Reach {
 			 * Written by Krish A. Patel 12/2/2024
 			 */
 			unvisitAll(graph, s);			// mark all as UNVISITED
-			int iter = DFS(graph, s, d, 0);
-			System.out.println("DFS: " + iter);
+			DFS(graph, s, d);
+			System.out.println("Distance (according to DFS): " + recCount);
 			unvisitAll(graph, s);
 			
 			int dist = getDistanceUsingBFS(graph, s, d);
@@ -94,37 +95,18 @@ public class Reach {
 		input.close();
 	}
 	
-	static int DFS(Graph G, int start, int end, int iter) {
-//		if (start == end)
-//		{
-//			System.out.println("Hit end outside!");
-//			System.out.println(iter);
-//			return iter + 1;
-//		}
-		
-		int totalIter = 0;
+	static void DFS(Graph G, int start, int end) {
+		recCount++;
 		
 		G.setMark(start, VISITED);
 		for (int w = G.first(start); w < G.n(); w = G.next(start, w))
 		{
 			if (G.getMark(w) != VISITED)
-			{
-				totalIter += DFS(G, w, end, iter + 1);
-				
-			}
+				DFS(G, w, end);
 			
 			if (w == end)
-			{
-				System.out.println("Hit end in for loop!");
-				System.out.println(iter);
-				System.out.println(totalIter);
 				break;
-			}
-			
 		}
-		
-		// count moving up the recursion tree as an iteration too
-		return totalIter + 1;
 	}
 	
 	/*
