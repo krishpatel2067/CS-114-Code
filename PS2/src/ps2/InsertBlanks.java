@@ -84,9 +84,11 @@ public class InsertBlanks {
 		str += "z";
 		
 		long start = System.currentTimeMillis();
-		ArrayList<String> wordsWithBlanks = splitIntoWords(str);
+//		ArrayList<String> wordsWithBlanks = splitIntoWords(str);
+		ArrayList<String> wordsWithBlanks = splitIntoWords(briarRose);
 		
-		System.out.println("Result of inserting blanks in `" + str + "`: ");
+//		System.out.println("Result of inserting blanks in `" + str + "`: ");
+		System.out.println("Result of inserting blanks in `BriarRose.txt`: ");
 		
 		for (String word : wordsWithBlanks)
 			System.out.print(word + DELIMITER);
@@ -101,7 +103,6 @@ public class InsertBlanks {
 		for (String word : wordsWithBlanks)
 			System.out.print(word + DELIMITER);
 		
-
 		wordsWithBlanks = splitIntoWords("ouncewabblyscruffyorbitalrecusemarblertelfordstangrampiaster");
 		
 		System.out.println("\n\nResult of inserting blanks in `BriarRose.txt`: ");
