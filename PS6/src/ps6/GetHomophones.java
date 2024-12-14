@@ -168,7 +168,7 @@ public class GetHomophones {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		return "";
 	}
 
